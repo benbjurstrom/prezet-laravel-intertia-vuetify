@@ -4,7 +4,7 @@
       <v-container fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4" class="text-center">
-            <logo height="50" style="fill:white"></logo>
+            <logo height="50" style="fill:white" />
           </v-col>
         </v-row>
         <v-row align="center" justify="center">
@@ -37,14 +37,16 @@
                     </v-col>
 
                     <v-col cols="12">
-                      <v-checkbox class="pa-0 ma-0" label="Remember me" v-model="form.remember"></v-checkbox>
+                      <v-checkbox v-model="form.remember" class="pa-0 ma-0" label="Remember me" />
                     </v-col>
                   </v-row>
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn @click="submit" large color="primary">Login</v-btn>
+                <v-btn large color="primary" @click="submit">
+                  Login
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -59,9 +61,12 @@
 export default {
   metaInfo: { title: 'Login' },
   props: {
-    errors: Object,
+    errors: {
+      type: Object,
+      default: () => {},
+    },
   },
-  data() {
+  data () {
     return {
       sending: false,
       form: {
@@ -72,7 +77,7 @@ export default {
     }
   },
   methods: {
-    submit() {
+    submit () {
       this.sending = true
       this.$inertia.post(this.route('login.attempt'), {
         email: this.form.email,

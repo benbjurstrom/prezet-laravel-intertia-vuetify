@@ -34,6 +34,7 @@ mix.js('resources/js/app.js', 'public/js')
     cssImport(),
     cssNesting(),
   ])
+  .disableNotifications()
   .webpackConfig({
     plugins: [
       new VuetifyLoaderPlugin()
@@ -41,11 +42,28 @@ mix.js('resources/js/app.js', 'public/js')
     output: { chunkFilename: 'js/[name].js?id=[chunkhash]' },
     resolve: {
       alias: {
-        'vue$': 'vue/dist/vue.runtime.esm.js',
+        vue$: 'vue/dist/vue.runtime.esm.js',
         '@shared': path.resolve('resources/js/Components/Shared'),
         '@': path.resolve('resources/js'),
       },
     },
+    module: {
+      rules: [
+        {
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/,
+          options: {
+            emitError: true,
+            emitWarning: true,
+            failOnError: true,
+            failOnWarning: true,
+            fix: true,
+          }
+        }
+      ]
+    }
   })
   .babelConfig({
     plugins: ['@babel/plugin-syntax-dynamic-import'],

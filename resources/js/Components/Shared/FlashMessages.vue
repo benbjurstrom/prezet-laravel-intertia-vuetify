@@ -5,8 +5,8 @@
     multi-line
     :timeout="6000"
     top
-    @input="close"
     vertical
+    @input="close"
   >
     {{ $root.flashMessage }}
     <v-btn
@@ -20,14 +20,14 @@
 </template>
 
 <script>
-  export default {
-    name: 'FlashMessages',
-    data: vm => ({}),
-    methods: {
-      close() {
-        this.$root.flashSnackbar = false
-        this.$root.flashMessage = ''
-      }
+export default {
+  name: 'FlashMessages',
+  data: vm => ({}),
+  methods: {
+    close () {
+      this.$root.flashSnackbar = false
+      this.$root.flashMessage = ''
     }
   }
+}
 </script>

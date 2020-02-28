@@ -7,18 +7,27 @@
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "lint": "eslint --fix --ext .js,.vue resources/js"
     },
     "devDependencies": {
+        "@babel/core": "^7.0.0",
         "@babel/plugin-syntax-dynamic-import": "^7.7.4",
         "@inertiajs/inertia": "^0.1.7",
         "@inertiajs/inertia-vue": "^0.1.0",
+        "@vue/eslint-config-standard": "^5.1.2",
         "autosize": "^4.0.2",
         "axios": "^0.18",
+        "babel-eslint": "^10.0.3",
         "cross-env": "^5.1",
         "css-loader": "^3.3.0",
         "deepmerge": "^4.2.2",
         "eslint": "^5.14.1",
+        "eslint-loader": "^3.0.3",
+        "eslint-plugin-import": "^2.20.1",
+        "eslint-plugin-node": "^11.0.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-standard": "^4.0.1",
         "eslint-plugin-vue": "^5.2.2",
         "fibers": "^4.0.2",
         "fuse.js": "^3.4.6",
@@ -41,5 +50,13 @@
         "vue-loader": "^15.9.0",
         "vue-meta": "^2.3.1",
         "vuetify": "^2.1.13"
+    },
+    "resolutions": {
+        "@babel/types": "7.8.3",
+        "@babel/parser": "7.7.5"
+    },
+    "resolutions": {
+        "@babel/types": "7.8.3",
+        "@babel/parser": "7.7.5"
     }
 }

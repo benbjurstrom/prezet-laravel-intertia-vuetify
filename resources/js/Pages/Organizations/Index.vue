@@ -3,7 +3,9 @@
     <v-col cols="12" class="py-0">
       <v-row justify="end" dense>
         <v-col cols="auto" class="py-0">
-          <v-btn @click="create" color="primary">Create Organization</v-btn>
+          <v-btn color="primary" @click="create">
+            Create Organization
+          </v-btn>
         </v-col>
       </v-row>
     </v-col>
@@ -27,9 +29,10 @@
             <td>{{ item.phone }}</td>
 
             <td class="text-right">
-
               <template v-if="item.deleted_at">
-                <v-chip color="warning" outlined>Deleted</v-chip>
+                <v-chip color="warning" outlined>
+                  Deleted
+                </v-chip>
               </template>
 
               <v-btn text icon @click="edit(item.id)">
@@ -38,7 +41,6 @@
             </td>
           </tr>
         </template>
-
       </data-table-wrapper>
     </v-col>
   </v-row>
@@ -53,25 +55,28 @@ export default {
   layout: (h, page) => h(Layout, [page]),
 
   props: {
-    organizations: Array,
+    organizations: {
+      type: Array,
+      required: true,
+    },
   },
 
   data: vm => ({
     headers: [
-      {text: 'ID', value: 'id'},
-      {text: 'Name', value: 'name'},
-      {text: 'City', value: 'city'},
-      {text: 'Phone', value: 'phone'},
-      {text: '', sortable: false},
+      { text: 'ID', value: 'id' },
+      { text: 'Name', value: 'name' },
+      { text: 'City', value: 'city' },
+      { text: 'Phone', value: 'phone' },
+      { text: '', sortable: false },
     ],
   }),
 
   methods: {
-    create() {
-      this.$inertia.visit(route('organizations.create'))
+    create () {
+      this.$inertia.visit(this.$route('organizations.create'))
     },
-    edit(_organisation) {
-      this.$inertia.visit(route('organizations.edit', _organisation))
+    edit (_organisation) {
+      this.$inertia.visit(this.$route('organizations.edit', _organisation))
     },
   }
 }

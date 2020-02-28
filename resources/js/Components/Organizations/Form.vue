@@ -7,7 +7,7 @@
           :error-messages="$page.errors.name"
           label="Name"
           outlined
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="12" lg="6">
         <v-text-field
@@ -15,7 +15,7 @@
           :error-messages="$page.errors.email"
           label="Email"
           outlined
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="12" lg="6">
         <v-text-field
@@ -23,7 +23,7 @@
           :error-messages="$page.errors.phone"
           label="Phone"
           outlined
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="12" lg="6">
         <v-text-field
@@ -31,7 +31,7 @@
           :error-messages="$page.errors.address"
           label="Address"
           outlined
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="12" lg="6">
         <v-text-field
@@ -39,7 +39,7 @@
           :error-messages="$page.errors.city"
           label="City"
           outlined
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="12" lg="6">
         <v-text-field
@@ -47,7 +47,7 @@
           :error-messages="$page.errors.postal_code"
           label="Postal code"
           outlined
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="12" lg="6">
         <v-text-field
@@ -55,7 +55,7 @@
           :error-messages="$page.errors.region"
           label="Province/State"
           outlined
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="12" lg="6">
         <v-select
@@ -64,25 +64,28 @@
           :items="countries"
           label="Country"
           outlined
-        ></v-select>
+        />
       </v-col>
     </v-row>
   </v-form>
 </template>
 
 <script>
-  export default {
-    name: 'OrganizationForm',
+export default {
+  name: 'OrganizationForm',
 
-    props: {
-      form: Object
+  props: {
+    form: {
+      type: Object,
+      required: true,
     },
+  },
 
-    data: vm => ({
-      countries: [
-        {value: "CA", text: 'Canada'},
-        {value: "US", text: 'United States'},
-      ],
-    })
-  }
+  data: vm => ({
+    countries: [
+      { value: 'CA', text: 'Canada' },
+      { value: 'US', text: 'United States' },
+    ],
+  })
+}
 </script>

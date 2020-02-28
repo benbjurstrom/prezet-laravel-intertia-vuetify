@@ -1,11 +1,13 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <organization-form v-bind:form.sync="form"></organization-form>
+      <organization-form :form.sync="form" />
     </v-col>
 
     <v-col cols="12">
-      <v-btn :loading="sending" color="primary" @click="submit">Save Organization</v-btn>
+      <v-btn :loading="sending" color="primary" @click="submit">
+        Save Organization
+      </v-btn>
     </v-col>
   </v-row>
 </template>
@@ -40,7 +42,7 @@ export default {
     },
   }),
   methods: {
-    submit() {
+    submit () {
       this.sending = true
       this.$inertia.post(this.route('organizations.store'), this.form)
         .then(() => this.sending = false)

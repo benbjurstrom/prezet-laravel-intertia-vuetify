@@ -14,9 +14,10 @@ Vue.use(InertiaApp)
 Vue.use(PortalVue)
 Vue.use(VueMeta)
 
-let app = document.getElementById('app')
+const app = document.getElementById('app')
 
-window.eventBus = new Vue()
+const eventBus = new Vue()
+window.eventBus = eventBus
 
 window.App = new Vue({
   vuetify,
@@ -24,9 +25,9 @@ window.App = new Vue({
   metaInfo: {
     title: 'Loading...',
     titleTemplate: '%s • Vuetify Ping CRM',
-    changed(info){
+    changed (info) {
       window.App.goBack = info.goBack
-      window.App.appTitle = info.titleChunk;
+      window.App.appTitle = info.titleChunk
     }
   },
 
@@ -38,7 +39,7 @@ window.App = new Vue({
     flashMessage: '',
   }),
 
-  mounted() {
+  mounted () {
     eventBus.$on('flashMessage', (value) => {
       this.flashMessage = value
       this.flashSnackbar = true

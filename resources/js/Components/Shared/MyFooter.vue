@@ -5,8 +5,8 @@
 </template>
 
 <script>
-  export default {
-    name: 'MyFooter',
-    data: vm => ({})
-  }
+export default {
+  name: 'MyFooter',
+  data: vm => ({})
+}
 </script>

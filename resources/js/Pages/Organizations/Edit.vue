@@ -1,18 +1,22 @@
 <template>
   <v-row>
-    <v-col cols="12" v-if="organization.deleted_at">
+    <v-col v-if="organization.deleted_at" cols="12">
       <trashed-banner @restore="restore">
         This organization has been deleted.
       </trashed-banner>
     </v-col>
 
     <v-col cols="12">
-      <organization-form v-bind:form.sync="form"></organization-form>
+      <organization-form :form.sync="form" />
     </v-col>
 
     <v-col cols="12" class="py-0">
-      <v-btn v-if="!organization.deleted_at" color="warning" @click="destroy">Delete Organization</v-btn>
-      <v-btn :loading="sending" color="primary" @click="submit">Update Organization</v-btn>
+      <v-btn v-if="!organization.deleted_at" color="warning" @click="destroy">
+        Delete Organization
+      </v-btn>
+      <v-btn :loading="sending" color="primary" @click="submit">
+        Update Organization
+      </v-btn>
     </v-col>
 
     <v-col cols="12">
@@ -45,7 +49,7 @@
 import Layout from '@shared/Layout'
 
 export default {
-  metaInfo() {
+  metaInfo () {
     return {
       title: this.organization.name,
       goBack: {
@@ -58,7 +62,10 @@ export default {
   layout: (h, page) => h(Layout, [page]),
 
   props: {
-    organization: Object,
+    organization: {
+      type: Object,
+      required: true,
+    },
   },
 
   remember: 'form',
@@ -71,19 +78,19 @@ export default {
   }),
 
   methods: {
-    submit() {
+    submit () {
       this.sending = true
       this.$inertia.put(this.route('organizations.update', this.organization.id), this.form)
         .then(() => this.sending = false)
     },
 
-    destroy() {
+    destroy () {
       if (confirm('Are you sure you want to delete this organization?')) {
         this.$inertia.delete(this.route('organizations.destroy', this.organization.id))
       }
     },
 
-    restore() {
+    restore () {
       if (confirm('Are you sure you want to restore this organization?')) {
         this.$inertia.put(this.route('organizations.restore', this.organization.id))
       }
