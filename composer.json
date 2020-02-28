@@ -5,7 +5,9 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^7.2",
+        "php": "^7.4",
+        "ext-json": "*",
+        "benbjurstrom/eloquent-postgres-uuids": "^2.0",
         "fideloper/proxy": "^4.0",
         "inertiajs/inertia-laravel": "^0.1",
         "laravel/framework": "^6.0",

@@ -1,12 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use BenBjurstrom\EloquentPostgresUuids\HasUuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 abstract class Model extends Eloquent
 {
+    use HasUuid;
+
     protected $guarded = [];
 
     protected $perPage = 10;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use League\Glide\Server;
 use Illuminate\Support\Facades\App;
