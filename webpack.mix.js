@@ -1,8 +1,9 @@
-const cssImport = require('postcss-import')
-const cssNesting = require('postcss-nesting')
+require('laravel-mix-versionhash')
+require('laravel-mix-purgecss')
 const mix = require('laravel-mix')
 const path = require('path')
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
+const ASSET_URL = (mix.inProduction()) ? process.env.ASSET_URL + '/' : '/'
 
 /*
 |--------------------------------------------------------------------------
@@ -14,37 +15,36 @@ const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 | file for the application as well as bundling up all the JS files.
 |
 */
-Mix.listen('configReady', config => {
-  const scssRule = config.module.rules.find(r => r.test.toString() === /\.scss$/.toString())
-  const scssOptions = scssRule.loaders.find(l => l.loader === 'sass-loader').options
-  scssOptions.implementation = require('sass')
-  scssOptions.fiber = require('fibers')
-  scssOptions.data = '@import "./resources/scss/variables.scss";'
-
-  const sassRule = config.module.rules.find(r => r.test.toString() === /\.sass$/.toString())
-  const sassOptions = sassRule.loaders.find(l => l.loader === 'sass-loader').options
-  scssOptions.implementation = require('sass')
-  scssOptions.fiber = require('fibers')
-
-  sassOptions.data = '@import "./resources/scss/variables.scss"'
-})
 
 mix.js('resources/js/app.js', 'public/js')
-  .postCss('resources/css/app.css', 'public/css', [
-    cssImport(),
-    cssNesting(),
-  ])
+  .sass('resources/sass/app.sass', 'public/css')
+  .options({
+    processCssUrls: false
+  })
   .disableNotifications()
-  .webpackConfig({
+
+if (mix.inProduction()) {
+  mix
+    .purgeCss()
+  // .extract() // Disabled until resolved: https://github.com/JeffreyWay/laravel-mix/issues/1889
+} else {
+  mix.sourceMaps()
+    .versionHash()
+}
+
+mix.webpackConfig(webpack => {
+  return {
     plugins: [
-      new VuetifyLoaderPlugin()
+      new VuetifyLoaderPlugin(),
+      new webpack.DefinePlugin({
+        'process.env.ASSET_PATH': JSON.stringify(ASSET_URL)
+      })
     ],
     output: { chunkFilename: 'js/[name].js?id=[chunkhash]' },
     resolve: {
       alias: {
         vue$: 'vue/dist/vue.runtime.esm.js',
-        '@shared': path.resolve('resources/js/Components/Shared'),
-        '@': path.resolve('resources/js'),
+        '~': path.resolve('resources/js'),
       },
     },
     module: {
@@ -64,9 +64,9 @@ mix.js('resources/js/app.js', 'public/js')
         }
       ]
     }
-  })
-  .babelConfig({
-    plugins: ['@babel/plugin-syntax-dynamic-import'],
-  })
-  // .version()
-  .sourceMaps()
+  }
+})
+
+mix.babelConfig({
+  plugins: ['@babel/plugin-syntax-dynamic-import'],
+})

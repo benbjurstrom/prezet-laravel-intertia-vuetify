@@ -43,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
                         'first_name' => Auth::user()->first_name,
                         'last_name' => Auth::user()->last_name,
                         'email' => Auth::user()->email,
+                        'gravatar' => md5(Auth::user()->email),
                         'role' => Auth::user()->role,
                         'account' => [
                             'id' => Auth::user()->account->id,
@@ -61,9 +62,11 @@ class AppServiceProvider extends ServiceProvider
                     ? Session::get('errors')->getBag('default')->getMessages()
                     : (object) [];
             },
+            'release' => function () {
+                return config('version.release');
+            }
         ]);
     }
-
     protected function registerGlide()
     {
         $this->app->bind(Server::class, function ($app) {

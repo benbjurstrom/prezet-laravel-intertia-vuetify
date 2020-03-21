@@ -1,27 +1,21 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
-import colors from 'vuetify/lib/util/colors'
 
 Vue.use(Vuetify)
 
-const options = {
+export default new Vuetify({
   theme: {
-    dark: true,
+    dark: false,
     themes: {
       light: {
-        primary: colors.lightBlue.base,
-        secondary: colors.orange.base,
-        accent: colors.blue.base,
-        error: colors.red.base,
-        warning: colors.deepOrange.base,
-        info: colors.cyan.base,
-        success: colors.green.base
+        primary: '#336699',
+        secondary: '#424242',
+        accent: '#82B1FF',
+        error: '#FF5252',
+        info: '#2196F3',
+        success: '#4CAF50',
+        warning: '#FFC107'
       }
     }
-  },
-  icons: {
-    iconfont: 'md', // default - only for display purposes
-  },
-}
-
-export default new Vuetify(options)
+  }
+})

@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import Layout from '@shared/Layout'
+import Layout from '~/components/Layout'
 
 export default {
   metaInfo () {

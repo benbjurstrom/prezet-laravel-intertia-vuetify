@@ -4,11 +4,15 @@ import Vue from 'vue'
 import VueMeta from 'vue-meta'
 import PortalVue from 'portal-vue'
 import { InertiaApp } from '@inertiajs/inertia-vue'
-import vuetify from '@/plugins/vuetify'
+import vuetify from '~/plugins/vuetify'
+import '~/plugins/fontawesome'
+import '~/plugins/filters'
 
-require('@/plugins/registerComponents')
+require('~/plugins/registerComponents')
 
 Vue.config.productionTip = false
+Vue.config.devtools = true
+
 Vue.mixin({ methods: { route: window.route } })
 Vue.use(InertiaApp)
 Vue.use(PortalVue)
@@ -49,7 +53,7 @@ window.App = new Vue({
   render: h => h(InertiaApp, {
     props: {
       initialPage: JSON.parse(app.dataset.page),
-      resolveComponent: name => import(`@/Pages/${name}`).then(module => module.default),
+      resolveComponent: name => import(`~/pages/${name}`).then(module => module.default),
       transformProps: props => {
         if (props.flash.success) {
           eventBus.$emit('flashMessage', props.flash.success)

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Layout from '@shared/Layout'
+import Layout from '~/layouts/Default'
 
 export default {
   metaInfo: { title: 'Dashboard' },

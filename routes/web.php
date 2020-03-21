@@ -20,7 +20,10 @@ Route::middleware('auth')
 ->group(function () {
 
     // Dashboard
-    Route::get('/', 'DashboardController')->name('dashboard');
+    Route::get('/', 'DashboardController')->name('home');
+
+    // Settings
+    Route::get('/settings', 'SettingsController@index')->name('settings');
 
     // Organizations
     Route::prefix('organizations')->name('organizations.')->group(function () {
