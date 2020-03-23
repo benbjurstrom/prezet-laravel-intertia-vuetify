@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-content>
+    <v-content class="background">
       <v-container
         class="fill-height"
         fluid

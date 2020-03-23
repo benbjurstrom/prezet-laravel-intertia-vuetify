@@ -1,11 +1,11 @@
 <template>
   <v-snackbar
     v-model="$root.flashSnackbar"
-    color="success"
+    color="primary"
     multi-line
-    :timeout="6000"
+    :timeout="4000"
     top
-    vertical
+    right
     @input="close"
   >
     {{ $root.flashMessage }}

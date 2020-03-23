@@ -1,7 +1,7 @@
 <template>
   <v-footer
     v-ripple="{ center: true }"
-    color="white"
+    color="background"
     app
     inset
   >

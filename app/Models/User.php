@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\MustVerifyEmail;
 use League\Glide\Server;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
@@ -14,7 +15,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use SoftDeletes, Authenticatable, Authorizable;
+    use SoftDeletes, Authenticatable, Authorizable, MustVerifyEmail;
 
     protected $casts = [
         'owner' => 'boolean',
@@ -23,11 +24,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function account()
     {
         return $this->belongsTo(Account::class);
-    }
-
-    public function getNameAttribute()
-    {
-        return $this->first_name.' '.$this->last_name;
     }
 
     public function setPasswordAttribute($password)

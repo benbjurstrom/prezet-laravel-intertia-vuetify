@@ -5,23 +5,28 @@
     />
 
     <v-app-bar
-      clipped-left
       app
-      color="white"
+      color="primary"
+      dark
+      flat
+      clipped-left
     >
-      <v-card flat style="margin: -16px;" tile height="64" width="256" color="white" class="d-flex justify-center align-center">
-        <v-toolbar-title @click.stop="drawer = !drawer">
-          LOGO <!--<v-img tile height="45" width="232" :src="'' | assetUrl" />-->
-        </v-toolbar-title>
-      </v-card>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-toolbar-title>
+        <v-img tile contain max-height="45" max-width="45" src="/img/logo.png" />
+      </v-toolbar-title>
       <v-spacer />
-      <inertia-link class="v-btn v-btn--flat v-btn--text theme--light v-size--default" :href="route('logout')" method="post">
-        Logout
-      </inertia-link>
+      <v-toolbar-items>
+        <v-btn icon>
+          <v-icon size="24">
+            notification_important
+          </v-icon>
+        </v-btn>
+        <UserMenu />
+      </v-toolbar-items>
     </v-app-bar>
-
-    <v-content class="mx-4 my-6">
-      <v-container fluid>
+    <v-content class="background">
+      <v-container class="px-6 my-6" fluid>
         <flash-messages />
         <slot />
       </v-container>
@@ -33,12 +38,14 @@
 <script>
 import Sidebar from '~/components/layout/Sidebar'
 import Footer from '~/components/layout/Footer'
+import UserMenu from '~/components/layout/UserMenu'
 
 export default {
   name: 'MainLayout',
   components: {
     Sidebar,
-    Footer
+    Footer,
+    UserMenu
   },
   data: () => ({
     drawer: true

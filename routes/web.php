@@ -10,17 +10,43 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Support\Facades\Route;
 
-// Auth
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login')->middleware('guest');
-Route::post('login', 'Auth\LoginController@login')->name('login.attempt')->middleware('guest');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+/*
+|--------------------------------------------------------------------------
+| Guest Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::middleware('guest')->group(function () {
+    Route::namespace('Auth')->name('auth.')->group(function () {
+        Route::get('login', 'LoginController@showLoginForm')->name('login');
+        Route::post('login', 'LoginController@login')->name('login.attempt');
+        Route::post('register', 'RegistrationController@register')->name('register');
+    });
+});
 
-Route::middleware('auth')
-->group(function () {
+
+/*
+|--------------------------------------------------------------------------
+| Authenticated Routes
+|--------------------------------------------------------------------------
+|
+|
+*/
+Route::middleware('auth')->group(function () {
+
+    Route::post('logout', 'Auth\LoginController@logout')->name('auth.logout');
+
+    // Organizations
+    Route::prefix('verification')->namespace('Auth')->name('verification.')->group(function () {
+        Route::post('resend', 'VerificationController@resend')->name('resend');
+    });
 
     // Dashboard
     Route::get('/', 'DashboardController')->name('home');
+    Route::patch('/password', 'Auth\PasswordController@update')->name('auth.password.update');
 
     // Settings
     Route::get('/settings', 'SettingsController@index')->name('settings');

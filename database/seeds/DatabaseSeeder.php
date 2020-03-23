@@ -13,14 +13,10 @@ class DatabaseSeeder extends Seeder
         $account = Account::create(['name' => 'Acme Corporation']);
 
         factory(User::class)->create([
-            'account_id' => $account->id,
-            'first_name' => 'John',
-            'last_name' => 'Doe',
-            'email' => 'admin@example.com',
-            'owner' => true,
+            'email' => 'admin@example.com'
         ]);
 
-        factory(User::class, 5)->create(['account_id' => $account->id]);
+        factory(User::class, 5)->create();
 
         $organizations = factory(Organization::class, 100)
             ->create(['account_id' => $account->id]);

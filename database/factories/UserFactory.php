@@ -16,11 +16,9 @@ use Illuminate\Support\Str;
 
 $factory->define(App\Models\User::class, function (Faker $faker) {
     return [
-        'first_name' => $faker->firstName,
-        'last_name' => $faker->lastName,
+        'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'password' => '123',
-        'remember_token' => Str::random(10),
-        'owner' => false,
+        'remember_token' => Str::random(10)
     ];
 });

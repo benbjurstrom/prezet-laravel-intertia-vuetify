@@ -23,6 +23,19 @@ const app = document.getElementById('app')
 const eventBus = new Vue()
 window.eventBus = eventBus
 
+Vue.mixin({
+  methods: {
+    pageHasError: (name) => {
+      if (Object.keys(Vue.prototype.$page.errors).length === 0) return false
+      return name in Vue.prototype.$page.errors
+    },
+    getPageError: (name) => {
+      if (Object.keys(Vue.prototype.$page.errors).length === 0) return null
+      return Vue.prototype.$page.errors[name]
+    }
+  }
+})
+
 window.App = new Vue({
   vuetify,
 
