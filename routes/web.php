@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ReauthenticateController;
 use App\Http\Controllers\Auth\ResetController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Settings\EmailUpdateController;
@@ -55,9 +56,11 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
 
     Route::get('mailable', function () {
-        return new App\Mail\EmailChangeVerification(auth()->user());
+        return new App\Mail\Settings\EmailChangeVerification(auth()->user());
     });
 
+    Route::get('auth/reauthenticate', [ReauthenticateController::class, 'getReauthenticate'])->name('auth.reauthenticate');
+    Route::post('auth/reauthenticate', [ReauthenticateController::class, 'postReauthenticate']);
     Route::post('logout', [LoginController::class, 'logout'])->name('auth.logout');
 
     // email verification
@@ -67,19 +70,23 @@ Route::middleware('auth')->group(function () {
         Route::get('verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verify');
     });
 
-    // email update
-    Route::prefix('email')->name('email.')->group(function () {
-        Route::post('', [EmailUpdateController::class, 'store'])->name('update');
-        Route::delete('', [EmailUpdateController::class, 'destroy'])->name('destroy');
-        Route::get('verify/{id}/{hash}', [EmailUpdateController::class, 'verify'])->name('verify');
+    // Settings
+    Route::middleware('reauthenticate')->group(function () {
+        // email update
+        Route::prefix('email')->name('email.')->group(function () {
+            Route::post('', [EmailUpdateController::class, 'store'])->name('update');
+            Route::delete('', [EmailUpdateController::class, 'destroy'])->name('destroy');
+            Route::get('verify/{id}/{hash}', [EmailUpdateController::class, 'verify'])->name('verify');
+        });
+
+        // Settings
+        Route::get('/settings', [SettingsController::class, '__invoke'])->name('settings');
+        Route::patch('/password', [PasswordUpdateController::class, 'update'])->name('password.update');
     });
+
 
     // Dashboard
     Route::get('/',  [DashboardController::class, '__invoke'])->name('home');
-
-    // Settings
-    Route::get('/settings', [SettingsController::class, '__invoke'])->name('settings');
-    Route::patch('/password', [PasswordUpdateController::class, 'update'])->name('password.update');
 
     // Organizations
     Route::prefix('organizations')->name('organizations.')->group(function () {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5a4c874eccaf90a7e968d72877eaebe",
+    "content-hash": "0625cbed71f7fb2270bd572be0727e1c",
     "packages": [
         {
             "name": "benbjurstrom/eloquent-postgres-uuids",
@@ -1422,6 +1422,53 @@
                 "psr-3"
             ],
             "time": "2019-12-20T14:22:59+00:00"
+        },
+        {
+            "name": "mpociot/reauthenticate",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mpociot/reauthenticate.git",
+                "reference": "286488d8aae57ea15a6f381de1c5e9251b79536e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mpociot/reauthenticate/zipball/286488d8aae57ea15a6f381de1c5e9251b79536e",
+                "reference": "286488d8aae57ea15a6f381de1c5e9251b79536e",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.5|^6.0",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Mpociot\\Reauthenticate\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcel Pociot",
+                    "email": "m.pociot@gmail.com"
+                }
+            ],
+            "description": "Reauthenticate users by letting them re-enter their passwords for specific parts of your app.",
+            "keywords": [
+                "Authentication",
+                "password prompt",
+                "reauthentication",
+                "security"
+            ],
+            "time": "2019-10-08T08:25:13+00:00"
         },
         {
             "name": "nesbot/carbon",
