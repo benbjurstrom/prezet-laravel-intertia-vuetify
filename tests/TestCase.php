@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use PHPUnit\Framework\Assert;
 use Illuminate\Foundation\Testing\TestResponse;
@@ -9,7 +11,22 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
+    use CreatesApplication, WithFaker, DatabaseTransactions;
+
+    /**
+     * @param object $instance
+     * @param string $method
+     * @param array $arguments
+     * @return object
+     * @throws \ReflectionException
+     */
+    protected function invokePrivateMethod($instance, $method, array $arguments = [])
+    {
+        $reflection = new \ReflectionClass($instance);
+        $method = $reflection->getMethod($method);
+        $method->setAccessible(true);
+        return $method->invokeArgs($instance, $arguments);
+    }
 
     protected function setUp(): void
     {

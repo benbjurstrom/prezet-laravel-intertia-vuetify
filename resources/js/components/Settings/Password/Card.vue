@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import PasswordEdit from '~/components/password/Edit'
+import PasswordEdit from '~/components/Settings/Password/Edit'
 
 export default {
   components: {

@@ -2,21 +2,12 @@
   <form @submit.prevent="submit">
     <v-container>
       <v-card-text>
-        <v-text-field
-          v-model="form.email"
-          label="Email"
-          append-icon="email"
-          outlined
-          class="form-control"
-          type="email"
-          name="email"
-          :class="{ 'is-invalid': pageHasError('email') }"
-          :error="pageHasError('email')"
-          :error-messages="getPageError('email')"
-        />
+        Your password must consist of At least 8 characters, A mixture of both uppercase and lowercase letters and A mixture of letters and numbers.
+      </v-card-text>
+      <v-card-text>
         <v-text-field
           v-model="form.password"
-          label="Password"
+          label="New Password"
           outlined
           :class="{ 'is-invalid': pageHasError('password') }"
           class="form-control"
@@ -29,11 +20,9 @@
         />
       </v-card-text>
       <v-card-actions>
-        <v-checkbox
-          v-model="form.remember"
-          label="Remember Me"
-          color="#033"
-        />
+        <inertia-link class="v-btn v-btn--flat v-btn--text theme--light v-size--small primary--text" :href="route('auth.login')" method="get">
+          Back to Login
+        </inertia-link>
         <v-spacer />
         <v-btn
           dark
@@ -42,12 +31,9 @@
           color="primary"
           type="submit"
         >
-          Login
+          Update Password
         </v-btn>
       </v-card-actions>
-      <inertia-link class="v-btn v-btn--flat v-btn--text theme--light v-size--small primary--text" :href="route('auth.password.reset.create')" method="get">
-        Forgot Password
-      </inertia-link>
     </v-container>
   </form>
 </template>
@@ -61,6 +47,18 @@ export default {
   components: {
     //
   },
+
+  props: {
+    userId: {
+      type: String,
+      required: true,
+    },
+    token: {
+      type: String,
+      required: true,
+    },
+  },
+
   data () {
     return {
       loading: false,
@@ -75,11 +73,7 @@ export default {
   methods: {
     submit () {
       this.loading = true
-      this.$inertia.post(this.route('auth.login'), {
-        email: this.form.email,
-        password: this.form.password,
-        remember: this.form.remember,
-      }).then(() => this.loading = false)
+      this.$inertia.patch(this.route('auth.password.reset.update', { user: this.userId, token: this.token }), this.form).then(() => this.loading = false)
     },
   },
 }

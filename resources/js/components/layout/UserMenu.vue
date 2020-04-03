@@ -28,14 +28,14 @@
         </v-list-item-content>
       </v-list-item>
       <v-divider />
-      <v-list-item link>
+      <inertia-link class="v-list-item v-list-item--link theme--light" :href="route('settings')" replace @click="menu = false">
         <v-list-item-icon>
           <v-icon color="primary">
             settings
           </v-icon>
         </v-list-item-icon>
         <v-list-item-title>Settings</v-list-item-title>
-      </v-list-item>
+      </inertia-link>
       <inertia-link class="v-list-item v-list-item--link theme--light" :href="route('auth.logout')" method="post" replace>
         <v-list-item-icon>
           <v-icon color="primary">
@@ -68,7 +68,7 @@ export default {
   methods: {
     hasPermission () {
       return true
-    },
+    }
   }
 }
 </script>

@@ -2,7 +2,6 @@
   <v-card flat>
     <v-toolbar
       flat
-      class="mb-4"
     >
       <v-toolbar-title>Update Password</v-toolbar-title>
       <v-spacer />
@@ -11,12 +10,17 @@
       </v-btn>
     </v-toolbar>
     <v-card-text>
-      <AlertError :form="form" dismissible />
+      <span>
+        Your password must consist of At least 8 characters, A mixture of both uppercase and lowercase letters and A mixture of letters and numbers.
+      </span>
+    </v-card-text>
+    <v-card-text>
+      <Alert :form="form" dismissible />
     </v-card-text>
     <v-card-text>
       <v-text-field
         v-model="form.password"
-        label="Current Password"
+        label="New Password"
         required
         :class="{ 'is-invalid': $page.errors.password }"
         :error="errors && ($page.errors.password !== undefined)"
@@ -25,20 +29,6 @@
         :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
         :type="showPassword ? 'text' : 'password'"
         @click:append="showPassword = !showPassword"
-      />
-    </v-card-text>
-    <v-card-text>
-      <v-text-field
-        v-model="form.password_new"
-        label="New Password"
-        required
-        :class="{ 'is-invalid': $page.errors.password_new }"
-        :error="errors && ($page.errors.password_new !== undefined)"
-        :error-messages="$page.errors.password_new"
-        hint="At least 8 characters"
-        :append-icon="showNewPassword ? 'mdi-eye' : 'mdi-eye-off'"
-        :type="showNewPassword ? 'text' : 'password'"
-        @click:append="showNewPassword = !showNewPassword"
       />
     </v-card-text>
     <v-card-actions>
@@ -59,19 +49,17 @@
 </template>
 
 <script>
-import AlertError from '~/components/AlertError'
+import Alert from '~/components/Alert'
 export default {
   components: {
-    AlertError
+    Alert
   },
 
   data: () => ({
     loading: false,
     showPassword: false,
-    showNewPassword: false,
     form: {
       password: null,
-      password_new: null,
     },
     rules: {
       required: value => !!value || 'Required.',

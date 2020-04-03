@@ -10,8 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Settings\EmailUpdateController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Settings\PasswordUpdateController;
+use App\Http\Controllers\Settings\EmailVerificationController;
+use App\Http\Controllers\Settings\SettingsController;
+use App\Http\Controllers\Auth\RegistrationController;
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Guest Routes
@@ -20,13 +29,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::middleware('guest')->group(function () {
-    Route::namespace('Auth')->name('auth.')->group(function () {
-        Route::get('login', 'LoginController@showLoginForm')->name('login');
-        Route::post('login', 'LoginController@login')->name('login.attempt');
-        Route::post('register', 'RegistrationController@register')->name('register');
+    Route::name('auth.')->group(function () {
+        Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+        Route::post('login', [LoginController::class, 'login'])->name('attempt');
+
+        Route::post('register', [RegistrationController::class, 'register'])->name('register');
+
+        Route::prefix('password/reset')->name('password.reset.')->group(function () {
+            Route::get('', [ResetController::class, 'create'])->name('create');
+            Route::post('', [ResetController::class, 'store'])->name('store');
+            Route::get('{user}/{token}', [ResetController::class, 'edit'])->name('edit');
+            Route::patch('{user}/{token}', [ResetController::class, 'update'])->name('update');
+        });
     });
 });
-
+//Auth::routes(['register' => false]);
 
 /*
 |--------------------------------------------------------------------------
@@ -37,19 +54,32 @@ Route::middleware('guest')->group(function () {
 */
 Route::middleware('auth')->group(function () {
 
-    Route::post('logout', 'Auth\LoginController@logout')->name('auth.logout');
+    Route::get('mailable', function () {
+        return new App\Mail\EmailChangeVerification(auth()->user());
+    });
 
-    // Organizations
-    Route::prefix('verification')->namespace('Auth')->name('verification.')->group(function () {
-        Route::post('resend', 'VerificationController@resend')->name('resend');
+    Route::post('logout', [LoginController::class, 'logout'])->name('auth.logout');
+
+    // email verification
+    Route::prefix('verification')->name('verification.')->group(function () {
+        Route::post('resend', [EmailVerificationController::class, 'resend'])->name('resend');
+        Route::get('verify', [EmailVerificationController::class, 'show'])->name('notice');
+        Route::get('verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verify');
+    });
+
+    // email update
+    Route::prefix('email')->name('email.')->group(function () {
+        Route::post('', [EmailUpdateController::class, 'store'])->name('update');
+        Route::delete('', [EmailUpdateController::class, 'destroy'])->name('destroy');
+        Route::get('verify/{id}/{hash}', [EmailUpdateController::class, 'verify'])->name('verify');
     });
 
     // Dashboard
-    Route::get('/', 'DashboardController')->name('home');
-    Route::patch('/password', 'Auth\PasswordController@update')->name('auth.password.update');
+    Route::get('/',  [DashboardController::class, '__invoke'])->name('home');
 
     // Settings
-    Route::get('/settings', 'SettingsController@index')->name('settings');
+    Route::get('/settings', [SettingsController::class, '__invoke'])->name('settings');
+    Route::patch('/password', [PasswordUpdateController::class, 'update'])->name('password.update');
 
     // Organizations
     Route::prefix('organizations')->name('organizations.')->group(function () {

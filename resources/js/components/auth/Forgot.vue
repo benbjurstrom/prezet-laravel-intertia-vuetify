@@ -2,6 +2,10 @@
   <form @submit.prevent="submit">
     <v-container>
       <v-card-text>
+        To Reset your password, enter the email you use to login.
+        A link will be emailed to this address which will let you reset your password.
+      </v-card-text>
+      <v-card-text>
         <v-text-field
           v-model="form.email"
           label="Email"
@@ -14,26 +18,11 @@
           :error="pageHasError('email')"
           :error-messages="getPageError('email')"
         />
-        <v-text-field
-          v-model="form.password"
-          label="Password"
-          outlined
-          :class="{ 'is-invalid': pageHasError('password') }"
-          class="form-control"
-          name="password"
-          :error="pageHasError('password') === true"
-          :error-messages="getPageError('password')"
-          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-          :type="showPassword ? 'text' : 'password'"
-          @click:append="showPassword = !showPassword"
-        />
       </v-card-text>
       <v-card-actions>
-        <v-checkbox
-          v-model="form.remember"
-          label="Remember Me"
-          color="#033"
-        />
+        <inertia-link class="v-btn v-btn--flat v-btn--text theme--light v-size--small primary--text" :href="route('auth.login')" method="get">
+          Back to Login
+        </inertia-link>
         <v-spacer />
         <v-btn
           dark
@@ -42,12 +31,9 @@
           color="primary"
           type="submit"
         >
-          Login
+          Submit
         </v-btn>
       </v-card-actions>
-      <inertia-link class="v-btn v-btn--flat v-btn--text theme--light v-size--small primary--text" :href="route('auth.password.reset.create')" method="get">
-        Forgot Password
-      </inertia-link>
     </v-container>
   </form>
 </template>
@@ -75,11 +61,7 @@ export default {
   methods: {
     submit () {
       this.loading = true
-      this.$inertia.post(this.route('auth.login'), {
-        email: this.form.email,
-        password: this.form.password,
-        remember: this.form.remember,
-      }).then(() => this.loading = false)
+      this.$inertia.post(this.route('auth.password.reset.store'), this.form).then(() => this.loading = false)
     },
   },
 }

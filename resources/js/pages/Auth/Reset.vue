@@ -24,26 +24,11 @@
         </v-col>
       </v-row>
       <v-card outlined>
-        <v-tabs
-          v-model="tab"
-          fixed-tabs
-        >
-          <v-tab>
-            Login
-          </v-tab>
-          <v-tab>
-            Sign Up
-          </v-tab>
-        </v-tabs>
         <Alert />
-        <v-tabs-items v-model="tab">
-          <v-tab-item>
-            <Login />
-          </v-tab-item>
-          <v-tab-item>
-            <Register />
-          </v-tab-item>
-        </v-tabs-items>
+        <Reset
+          :user-id="userId"
+          :token="token"
+        />
       </v-card>
     </v-col>
   </v-row>
@@ -51,23 +36,34 @@
 
 <script>
 import Layout from '~/layouts/Basic'
-import Login from '~/components/auth/Login'
-import Register from '~/components/auth/Register'
+import Reset from '~/components/auth/Reset'
 import Alert from '~/components/Alert'
 
 export default {
-  metaInfo: { title: 'Login' },
+  metaInfo: { title: 'Reset Password' },
   layout: (h, page) => h(Layout, [page]),
   components: {
-    Login,
-    Register,
+    Reset,
     Alert
   },
+
+  props: {
+    userId: {
+      type: String,
+      required: true,
+    },
+    token: {
+      type: String,
+      required: true,
+    },
+  },
+
   data () {
     return {
-      tab: null,
+      //
     }
   },
+
   methods: {
     //
   },

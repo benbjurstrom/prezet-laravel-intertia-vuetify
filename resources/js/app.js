@@ -24,6 +24,11 @@ const eventBus = new Vue()
 window.eventBus = eventBus
 
 Vue.mixin({
+  computed: {
+    pageHasErrors: () => {
+      return (Object.keys(Vue.prototype.$page.errors).length !== 0)
+    },
+  },
   methods: {
     pageHasError: (name) => {
       if (Object.keys(Vue.prototype.$page.errors).length === 0) return false

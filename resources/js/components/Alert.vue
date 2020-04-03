@@ -1,10 +1,10 @@
 <template>
-  <v-card v-if="Object.keys($page.errors).length" flat>
+  <v-card v-if="show" flat>
     <v-card-text>
       <v-alert
         dense
         outlined
-        type="error"
+        :type="type"
         dismissible
         @input="dismiss"
       >
@@ -22,10 +22,33 @@ export default {
       type: String,
       default: 'There were some problems with your input.'
     },
+    type: {
+      type: String,
+      default: 'error'
+    },
+  },
+
+  data: vm => ({
+    dismissed: false
+  }),
+
+  computed: {
+    show () {
+      if (this.dismissed) {
+        return false
+      }
+
+      if (this.type === 'error') {
+        return this.pageHasErrors
+      }
+
+      return true
+    },
   },
 
   methods: {
     dismiss () {
+      this.dismissed = true
       this.$page.errors = {}
     }
   }

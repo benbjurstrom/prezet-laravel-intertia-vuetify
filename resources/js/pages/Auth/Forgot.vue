@@ -24,26 +24,8 @@
         </v-col>
       </v-row>
       <v-card outlined>
-        <v-tabs
-          v-model="tab"
-          fixed-tabs
-        >
-          <v-tab>
-            Login
-          </v-tab>
-          <v-tab>
-            Sign Up
-          </v-tab>
-        </v-tabs>
         <Alert />
-        <v-tabs-items v-model="tab">
-          <v-tab-item>
-            <Login />
-          </v-tab-item>
-          <v-tab-item>
-            <Register />
-          </v-tab-item>
-        </v-tabs-items>
+        <Forgot />
       </v-card>
     </v-col>
   </v-row>
@@ -51,21 +33,19 @@
 
 <script>
 import Layout from '~/layouts/Basic'
-import Login from '~/components/auth/Login'
-import Register from '~/components/auth/Register'
+import Forgot from '~/components/auth/Forgot'
 import Alert from '~/components/Alert'
 
 export default {
-  metaInfo: { title: 'Login' },
+  metaInfo: { title: 'Forgot Password' },
   layout: (h, page) => h(Layout, [page]),
   components: {
-    Login,
-    Register,
+    Forgot,
     Alert
   },
   data () {
     return {
-      tab: null,
+      //
     }
   },
   methods: {

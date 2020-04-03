@@ -8,7 +8,7 @@
     <v-container class="pa-0 ma-0 d-flex justify-space-between caption" fluid>
       <div />
       <div>
-        {{ new Date().getFullYear() }}
+        Prezet &copy; {{ new Date().getFullYear() }}
       </div>
       <div>{{ $page.release }}</div>
     </v-container>

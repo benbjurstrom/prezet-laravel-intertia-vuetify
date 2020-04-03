@@ -1,20 +1,23 @@
 <template>
   <v-snackbar
     v-model="$root.flashSnackbar"
-    color="primary"
+    color="accent"
     multi-line
-    :timeout="4000"
+    :timeout="10000"
     top
     right
     @input="close"
   >
     {{ $root.flashMessage }}
     <v-btn
-      dark
       text
+      icon
+      color="primary"
       @click="close"
     >
-      Close
+      <v-icon small>
+        close
+      </v-icon>
     </v-btn>
   </v-snackbar>
 </template>
