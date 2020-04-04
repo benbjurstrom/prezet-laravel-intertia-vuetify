@@ -5,6 +5,7 @@ namespace Tests;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
+use Mpociot\Reauthenticate\Middleware\Reauthenticate;
 use PHPUnit\Framework\Assert;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -31,6 +32,28 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->withoutMiddleware(Reauthenticate::class);
+
+        TestResponse::macro('url', function () {
+            return json_decode(json_encode($this->original->getData()['page']['url']), JSON_OBJECT_AS_ARRAY);
+        });
+
+        TestResponse::macro('assertUrl', function ($value) {
+            Assert::assertEquals($value, $this->url());
+
+            return $this;
+        });
+
+        TestResponse::macro('component', function () {
+            return json_decode(json_encode($this->original->getData()['page']['component']), JSON_OBJECT_AS_ARRAY);
+        });
+
+        TestResponse::macro('assertComponent', function ($value) {
+            Assert::assertEquals($value, $this->component());
+
+            return $this;
+        });
 
         TestResponse::macro('props', function ($key = null) {
             $props = json_decode(json_encode($this->original->getData()['page']['props']), JSON_OBJECT_AS_ARRAY);

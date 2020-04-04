@@ -4,10 +4,21 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+    "repositories": [
+      {
+        "type": "vcs",
+        "url": "https://github.com/benbjurstrom/Laraguard.git"
+      },
+      {
+        "type": "composer",
+        "url": "https://nova.laravel.com"
+      }
+    ],
     "require": {
         "php": "^7.4",
         "ext-json": "*",
         "benbjurstrom/eloquent-postgres-uuids": "^2.0",
+        "darkghosthunter/laraguard": "dev-master",
         "fideloper/proxy": "^4.0",
         "inertiajs/inertia-laravel": "^0.1",
         "laravel/framework": "^6.0",

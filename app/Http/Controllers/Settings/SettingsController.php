@@ -9,8 +9,10 @@ class SettingsController extends Controller
 {
     public function __invoke()
     {
+        $user = auth()->user();
         return Inertia::render('Settings/Index', [
-            'user' => auth()->user()
+            'user' => $user,
+            'twoFactor' => $user->hasTwoFactorEnabled()
         ]);
     }
 }

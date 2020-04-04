@@ -21,6 +21,7 @@ use App\Http\Controllers\Settings\PasswordUpdateController;
 use App\Http\Controllers\Settings\EmailVerificationController;
 use App\Http\Controllers\Settings\SettingsController;
 use App\Http\Controllers\Auth\RegistrationController;
+use App\Http\Controllers\Settings\TwoFactorController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +82,9 @@ Route::middleware('auth')->group(function () {
 
         // Settings
         Route::get('/settings', [SettingsController::class, '__invoke'])->name('settings');
+        Route::get('/settings/2fa', [TwoFactorController::class, 'create'])->name('settings.2fa.create');
+        Route::post('/settings/2fa', [TwoFactorController::class, 'store'])->name('settings.2fa.store');
+        Route::delete('/settings/2fa', [TwoFactorController::class, 'destroy'])->name('settings.2fa.destroy');
         Route::patch('/password', [PasswordUpdateController::class, 'update'])->name('password.update');
     });
 

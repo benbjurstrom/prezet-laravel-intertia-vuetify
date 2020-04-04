@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use DarkGhostHunter\Laraguard\Contracts\TwoFactorAuthenticatable;
+use DarkGhostHunter\Laraguard\TwoFactorAuthentication;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Notifications\Notifiable;
@@ -16,9 +18,19 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract ;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
+class User extends Model implements
+    AuthenticatableContract,
+    AuthorizableContract,
+    CanResetPasswordContract,
+    TwoFactorAuthenticatable
 {
-    use SoftDeletes, Authenticatable, Authorizable, MustVerifyEmail, Notifiable, CanResetPassword;
+    use SoftDeletes,
+        Authenticatable,
+        Authorizable,
+        MustVerifyEmail,
+        Notifiable,
+        CanResetPassword,
+        TwoFactorAuthentication;
 
     protected $casts = [
         'owner' => 'boolean',
