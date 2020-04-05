@@ -3,7 +3,7 @@
     id="sidebar"
     v-model="drawer"
     dark
-    color="primary"
+    color="#4A5568"
     app
     :clipped="true"
   >

@@ -2,19 +2,19 @@ version: "3.6"
 services:
   postgres:
     image: postgres:alpine
-    container_name: inertia-postgres
+    container_name: prezet-postgres
     volumes:
       - ./docker/data/postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=inertia
+      - POSTGRES_DB=prezet
     ports:
       - "5432:5432"
 
   redis:
     image: redis:alpine
-    container_name: inertia-redis
+    container_name: prezet-redis
     command: redis-server /usr/local/etc/redis/redis.conf
     volumes:
       - ./docker/redis.conf:/usr/local/etc/redis/redis.conf
@@ -24,14 +24,41 @@ services:
       --requirepass secret
 
   mailhog:
-    container_name: inertia-mailhog
+    container_name: prezet-mailhog
     image: mailhog/mailhog:latest
     ports:
       - "8025:8025"
       - "1025:1025"
 
+  queue:
+    container_name: prezet-queue
+    image: benbjurstrom/php-laravel:0.1.0
+    depends_on: [redis, postgres]
+    environment:
+      APP_MODE: queue
+      QUEUE_CONNECTION: redis
+      DB_HOST: prezet-postgres
+      DB_PORT: 5432
+      REDIS_HOST: prezet-redis
+      MAIL_HOST: prezet-mailhog
+    volumes:
+      - ./:/var/www
+
+  job:
+    container_name: prezet-job
+    image: benbjurstrom/php-laravel:0.1.0
+    depends_on: [redis, postgres]
+    environment:
+      APP_MODE: job
+      DB_HOST: prezet-postgres
+      DB_PORT: 5432
+      REDIS_HOST: prezet-redis
+      MAIL_HOST: prezet-mailhog
+    volumes:
+      - ./:/var/www
+
   nginx:
-    container_name: inertia-nginx
+    container_name: prezet-nginx
     image: nginx:alpine
     working_dir: /var/www
     volumes:
@@ -41,16 +68,15 @@ services:
       - "8000:80"
 
   phpfpm:
-    container_name: inertia-phpfpm
-    image: benbjurstrom/php-laravel:0.0.2
+    container_name: prezet-phpfpm
+    image: benbjurstrom/php-laravel:0.1.0
     environment:
-      APP_MODE: api
-      # DB_HOST: docker.for.mac.localhost
-      DB_HOST: inertia-postgres
+      APP_MODE: app
+      DB_HOST: prezet-postgres
       DB_PORT: 5432
-      REDIS_HOST: inertia-redis
-      MAIL_HOST: inertia-mailhog
-      APP_URL: http://inertia-nginx
+      REDIS_HOST: prezet-redis
+      MAIL_HOST: prezet-mailhog
+      APP_URL: http://prezet-nginx
     working_dir: /var/www
     volumes:
       - ./:/var/www

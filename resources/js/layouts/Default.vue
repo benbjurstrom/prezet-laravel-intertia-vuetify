@@ -9,6 +9,7 @@
       color="primary"
       dark
       flat
+      dense
       clipped-left
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
