@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<ruleset name="Basic Project Ruleset">
+    <rule ref="rulesets/cleancode.xml">
+        <exclude name="BooleanArgumentFlag"/>
+        <exclude name="StaticAccess"/>
+        <exclude name="IfStatementAssignment"/>
+    </rule>
+    <rule ref="rulesets/codesize.xml" />
+    <rule ref="rulesets/controversial.xml" />
+    <rule ref="rulesets/design.xml">
+        <exclude name="NumberOfChildren"/>
+    </rule>
+
+    <!--<rule ref="rulesets/naming.xml/ShortVariable"/>-->
+    <rule ref="rulesets/naming.xml/LongVariable">
+        <properties>
+            <property name="maximum" value="25"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/naming.xml/ShortMethodName"/>
+    <rule ref="rulesets/naming.xml/ConstructorWithNameAsEnclosingClass"/>
+    <rule ref="rulesets/naming.xml/ConstantNamingConventions"/>
+    <rule ref="rulesets/naming.xml/BooleanGetMethodName"/>
+
+    <rule ref="rulesets/unusedcode.xml">
+        <exclude name="UnusedFormalParameter"/>
+    </rule>
+
+    <!-- exclusions -->
+    <!--<exclude-pattern>foo</exclude-pattern>-->
+</ruleset>
+<!--(\$[a-zA-Z]*)_([a-z]{1,1})([a-zA-Z]*)-->
+<!--$1\U$2\L$3-->

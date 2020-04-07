@@ -28,7 +28,7 @@ class OrganizationsTest extends TestCase
         ]);
     }
 
-    public function test_can_view_organizations()
+    public function testCanViewOrganizations()
     {
         $this->user->account->organizations()->saveMany(
             factory(Organization::class, 5)->make()
@@ -46,7 +46,7 @@ class OrganizationsTest extends TestCase
             });
     }
 
-    public function test_can_search_for_organizations()
+    public function testCanSearchForOrganizations()
     {
         $this->user->account->organizations()->saveMany(
             factory(Organization::class, 5)->make()
@@ -62,7 +62,7 @@ class OrganizationsTest extends TestCase
             });
     }
 
-    public function test_cannot_view_deleted_organizations()
+    public function testCannotViewDeletedOrganizations()
     {
         $this->user->account->organizations()->saveMany(
             factory(Organization::class, 5)->make()
@@ -74,7 +74,7 @@ class OrganizationsTest extends TestCase
             ->assertPropCount('organizations.data', 4);
     }
 
-    public function test_can_filter_to_view_deleted_organizations()
+    public function testCanFilterToViewDeletedOrganizations()
     {
         $this->user->account->organizations()->saveMany(
             factory(Organization::class, 5)->make()

@@ -9,6 +9,7 @@ use Mpociot\Reauthenticate\Middleware\Reauthenticate;
 use PHPUnit\Framework\Assert;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use ReflectionClass;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -23,7 +24,7 @@ abstract class TestCase extends BaseTestCase
      */
     protected function invokePrivateMethod($instance, $method, array $arguments = [])
     {
-        $reflection = new \ReflectionClass($instance);
+        $reflection = new ReflectionClass($instance);
         $method = $reflection->getMethod($method);
         $method->setAccessible(true);
         return $method->invokeArgs($instance, $arguments);
@@ -76,10 +77,10 @@ abstract class TestCase extends BaseTestCase
 
             if (is_callable($value)) {
                 $value($this->props($key));
-            } else {
-                Assert::assertEquals($this->props($key), $value);
+                return $this;
             }
 
+            Assert::assertEquals($this->props($key), $value);
             return $this;
         });
 

@@ -28,7 +28,7 @@ class ContactsTest extends TestCase
         ]);
     }
 
-    public function test_can_view_contacts()
+    public function testCanViewContacts()
     {
         $this->user->account->contacts()->saveMany(
             factory(Contact::class, 5)->make()
@@ -47,7 +47,7 @@ class ContactsTest extends TestCase
             });
     }
 
-    public function test_can_search_for_contacts()
+    public function testCanSearchForContacts()
     {
         $this->user->account->contacts()->saveMany(
             factory(contact::class, 5)->make()
@@ -66,7 +66,7 @@ class ContactsTest extends TestCase
             });
     }
 
-    public function test_cannot_view_deleted_contacts()
+    public function testCannotViewDeletedContacts()
     {
         $this->user->account->contacts()->saveMany(
             factory(contact::class, 5)->make()
@@ -78,7 +78,7 @@ class ContactsTest extends TestCase
             ->assertPropCount('contacts.data', 4);
     }
 
-    public function test_can_filter_to_view_deleted_contacts()
+    public function testCanFilterToViewDeletedContacts()
     {
         $this->user->account->contacts()->saveMany(
             factory(contact::class, 5)->make()
