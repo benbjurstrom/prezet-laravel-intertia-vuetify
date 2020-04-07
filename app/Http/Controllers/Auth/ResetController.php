@@ -11,11 +11,11 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Throwable;
+use Inertia\Response;
 
 class ResetController extends Controller
 {
@@ -49,7 +49,7 @@ class ResetController extends Controller
         $this->middleware('guest');
     }
 
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Auth/Forgot');
     }

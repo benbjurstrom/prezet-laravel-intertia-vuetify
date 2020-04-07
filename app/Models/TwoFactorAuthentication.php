@@ -9,6 +9,9 @@ class TwoFactorAuthentication extends \DarkGhostHunter\Laraguard\Eloquent\TwoFac
 {
     use HasUuid;
 
+    /**
+     * @var string
+     */
     protected $dateFormat = 'Y-m-d H:i:sO';
 
     /**
@@ -16,7 +19,7 @@ class TwoFactorAuthentication extends \DarkGhostHunter\Laraguard\Eloquent\TwoFac
      *
      * @param string $value
      */
-    protected function setSharedSecretAttribute($value)
+    protected function setSharedSecretAttribute($value): void
     {
         $this->attributes['shared_secret'] = $value;
     }

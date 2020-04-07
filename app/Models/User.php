@@ -6,6 +6,8 @@ use DarkGhostHunter\Laraguard\Contracts\TwoFactorAuthenticatable;
 use DarkGhostHunter\Laraguard\TwoFactorAuthentication;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
 use League\Glide\Server;
 use Illuminate\Support\Facades\App;
@@ -32,41 +34,52 @@ class User extends Model implements
         CanResetPassword,
         TwoFactorAuthentication;
 
+    /**
+     * @var array $casts
+     */
     protected $casts = [
         'owner' => 'boolean',
     ];
 
-    public function account()
+
+    public function account(): BelongsTo
     {
         return $this->belongsTo(Account::class);
     }
 
-    public function setPasswordAttribute($password)
+    public function setPasswordAttribute(string $password): void
     {
         $this->attributes['password'] = Hash::make($password);
     }
 
+    /**
+     * @return string | null
+     */
     public function photoUrl(array $attributes)
     {
         if ($this->photo_path) {
             return URL::to(App::make(Server::class)->fromPath($this->photo_path, $attributes));
         }
+
+        return null;
     }
 
-    public function scopeOrderByName($query)
+    public function scopeOrderByName(Builder $query): void
     {
         $query->orderBy('last_name')->orderBy('first_name');
     }
 
-    public function scopeWhereRole($query, $role)
+    public function scopeWhereRole(Builder $query, string $role): Builder
     {
         switch ($role) {
             case 'user': return $query->where('owner', false);
             case 'owner': return $query->where('owner', true);
         }
+
+        return $query;
     }
 
-    public function scopeFilter($query, array $filters)
+    public function scopeFilter(Builder $query, array $filters): void
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {

@@ -7,10 +7,11 @@ use App\Models\Organization;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Redirect;
+use Inertia\Response;
 
 class SettingsController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
         return Inertia::render('Organizations/Index', [
             'organizations' => Auth::user()->account->organizations()

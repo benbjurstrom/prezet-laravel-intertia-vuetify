@@ -39,6 +39,15 @@ class Version extends Command
     {
         $release = $this->argument('release');
         $hash = trim(shell_exec('git rev-parse HEAD'));
+        $this->writeFile($release, $hash);
+    }
+
+    /**
+     * @param mixed $release
+     * @param string $hash
+     */
+    protected function writeFile($release, $hash): void
+    {
         $content = "<?php
 
 return [

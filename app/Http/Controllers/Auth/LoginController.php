@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Inertia\Response;
 
 class LoginController extends Controller
 {
@@ -33,7 +33,7 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/';
 
-    public function showLoginForm()
+    public function showLoginForm(): Response
     {
         return Inertia::render('Auth/Login');
     }
@@ -41,11 +41,11 @@ class LoginController extends Controller
     /**
      * The user has been authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
+     * @param Request $request
+     * @param mixed $user
+     * @return Response
      */
-    protected function authenticated(Request $request, $user)
+    protected function authenticated(Request $request, $user): Response
     {
         return Inertia::render('Dashboard/Index');
     }

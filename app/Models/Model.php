@@ -10,6 +10,9 @@ abstract class Model extends Eloquent
 {
     use HasUuid;
 
+    /**
+     * @var array $guarded
+     */
     protected $guarded = [];
 
     protected $perPage = 10;

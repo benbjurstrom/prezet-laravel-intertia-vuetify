@@ -50,10 +50,10 @@ class EmailVerificationController extends Controller
      * Mark the authenticated user's email address as verified.
      *
      * @param Request $request
-     * @return Response | RedirectResponse
+     * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function verify(Request $request)
+    public function verify(Request $request): RedirectResponse
     {
         if (! hash_equals((string) $request->route('id'), (string) $request->user()->getKey())) {
             throw new AuthorizationException;

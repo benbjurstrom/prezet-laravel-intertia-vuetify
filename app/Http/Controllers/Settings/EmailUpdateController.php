@@ -34,7 +34,7 @@ class EmailUpdateController extends Controller
      * @throws ValidationException
      * @throws \Throwable
      */
-    public function store(Request $request, EmailService $es)
+    public function store(Request $request, EmailService $es): RedirectResponse
     {
         $data = $this->validate($request, [
             'email' => 'required|email|max:255',

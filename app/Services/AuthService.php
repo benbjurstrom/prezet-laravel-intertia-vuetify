@@ -37,9 +37,9 @@ class AuthService
 
     /**
      * @param User $user
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function sendForgotPasswordEmail(User $user)
+    public function sendForgotPasswordEmail(User $user): void
     {
         Password::deleteToken($user);
         $token = Password::createToken($user);
@@ -51,7 +51,7 @@ class AuthService
      * @param string $email
      * @param string $token
      * @return User
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function getTokenUser($email, $token): User
     {
@@ -93,18 +93,14 @@ class AuthService
      * @param bool $subject
      * @throws \Throwable
      */
-    protected function validate($subject)
+    protected function validate($subject): void
     {
         throw_unless($subject, ValidationException::withMessages([
             'token'    => ['The given credentials are incorrect']
         ]));
     }
 
-    /**
-     * @param User $user
-     * @throws \Throwable
-     */
-    protected function validateUserNotVerified(User $user)
+    protected function validateUserNotVerified(User $user): void
     {
         throw_if($user->hasVerifiedEmail(), ValidationException::withMessages([
             'id'    => ['The current user email address is already verified.']
