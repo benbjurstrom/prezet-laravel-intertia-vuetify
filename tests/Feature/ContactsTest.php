@@ -32,9 +32,7 @@ class ContactsTest extends TestCase
 
     public function testCanViewContacts()
     {
-        $this->user->account->contacts()->saveMany(
-            factory(Contact::class, 5)->make()
-        );
+        $this->user->account->contacts()->saveMany(factory(Contact::class, 5)->make());
 
         $this->actingAs($this->user)
             ->get('/contacts')
@@ -42,21 +40,22 @@ class ContactsTest extends TestCase
             ->assertPropCount('contacts.data', 5)
             ->assertPropValue('contacts.data', function ($contacts) {
                 $this->assertEquals(
-                    ['id', 'name', 'phone', 'city',
-                    'deleted_at', 'organization'],
-                    array_keys($contacts[0])
+                    ['id', 'name', 'phone', 'city', 'deleted_at', 'organization'],
+                    array_keys($contacts[0]),
                 );
             });
     }
 
     public function testCanSearchForContacts()
     {
-        $this->user->account->contacts()->saveMany(
-            factory(contact::class, 5)->make()
-        )->first()->update([
-            'first_name' => 'Greg',
-            'last_name' => 'Andersson'
-        ]);
+        $this->user->account
+            ->contacts()
+            ->saveMany(factory(contact::class, 5)->make())
+            ->first()
+            ->update([
+                'first_name' => 'Greg',
+                'last_name' => 'Andersson',
+            ]);
 
         $this->actingAs($this->user)
             ->get('/contacts?search=Greg')
@@ -70,9 +69,11 @@ class ContactsTest extends TestCase
 
     public function testCannotViewDeletedContacts()
     {
-        $this->user->account->contacts()->saveMany(
-            factory(contact::class, 5)->make()
-        )->first()->delete();
+        $this->user->account
+            ->contacts()
+            ->saveMany(factory(contact::class, 5)->make())
+            ->first()
+            ->delete();
 
         $this->actingAs($this->user)
             ->get('/contacts')
@@ -82,9 +83,11 @@ class ContactsTest extends TestCase
 
     public function testCanFilterToViewDeletedContacts()
     {
-        $this->user->account->contacts()->saveMany(
-            factory(contact::class, 5)->make()
-        )->first()->delete();
+        $this->user->account
+            ->contacts()
+            ->saveMany(factory(contact::class, 5)->make())
+            ->first()
+            ->delete();
 
         $this->actingAs($this->user)
             ->get('/contacts?trashed=with')

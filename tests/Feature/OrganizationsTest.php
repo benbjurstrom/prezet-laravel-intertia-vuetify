@@ -32,27 +32,24 @@ class OrganizationsTest extends TestCase
 
     public function testCanViewOrganizations()
     {
-        $this->user->account->organizations()->saveMany(
-            factory(Organization::class, 5)->make()
-        );
+        $this->user->account->organizations()->saveMany(factory(Organization::class, 5)->make());
 
         $this->actingAs($this->user)
             ->get('/organizations')
             ->assertStatus(200)
             ->assertPropCount('organizations.data', 5)
             ->assertPropValue('organizations.data', function ($organizations) {
-                $this->assertEquals(
-                    ['id', 'name', 'phone', 'city', 'deleted_at'],
-                    array_keys($organizations[0])
-                );
+                $this->assertEquals(['id', 'name', 'phone', 'city', 'deleted_at'], array_keys($organizations[0]));
             });
     }
 
     public function testCanSearchForOrganizations()
     {
-        $this->user->account->organizations()->saveMany(
-            factory(Organization::class, 5)->make()
-        )->first()->update(['name' => 'Some Big Fancy Company Name']);
+        $this->user->account
+            ->organizations()
+            ->saveMany(factory(Organization::class, 5)->make())
+            ->first()
+            ->update(['name' => 'Some Big Fancy Company Name']);
 
         $this->actingAs($this->user)
             ->get('/organizations?search=Some Big Fancy Company Name')
@@ -66,9 +63,11 @@ class OrganizationsTest extends TestCase
 
     public function testCannotViewDeletedOrganizations()
     {
-        $this->user->account->organizations()->saveMany(
-            factory(Organization::class, 5)->make()
-        )->first()->delete();
+        $this->user->account
+            ->organizations()
+            ->saveMany(factory(Organization::class, 5)->make())
+            ->first()
+            ->delete();
 
         $this->actingAs($this->user)
             ->get('/organizations')
@@ -78,9 +77,11 @@ class OrganizationsTest extends TestCase
 
     public function testCanFilterToViewDeletedOrganizations()
     {
-        $this->user->account->organizations()->saveMany(
-            factory(Organization::class, 5)->make()
-        )->first()->delete();
+        $this->user->account
+            ->organizations()
+            ->saveMany(factory(Organization::class, 5)->make())
+            ->first()
+            ->delete();
 
         $this->actingAs($this->user)
             ->get('/organizations?trashed=with')

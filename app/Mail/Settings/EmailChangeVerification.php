@@ -20,7 +20,6 @@ class EmailChangeVerification extends Mailable
      */
     public $user;
 
-
     /**
      * Create a new message instance.
      * @param User $user
@@ -28,7 +27,7 @@ class EmailChangeVerification extends Mailable
      */
     public function __construct(User $user)
     {
-        $this->user  = $user;
+        $this->user = $user;
     }
 
     /**
@@ -41,11 +40,12 @@ class EmailChangeVerification extends Mailable
         return $this->subject('Email Change Verification')
             ->markdown('mail')
             ->with([
-                'message' => 'Please click the button below to complete your email address change. Your email will not be changed until this step is completed.',
+                'message' =>
+                    'Please click the button below to complete your email address change. Your email will not be changed until this step is completed.',
                 'action' => [
                     'text' => 'Verify Email Address',
-                    'url' => $this->verificationUrl()
-                ]
+                    'url' => $this->verificationUrl(),
+                ],
             ]);
     }
 
@@ -62,7 +62,7 @@ class EmailChangeVerification extends Mailable
             [
                 'id' => $this->user->id,
                 'hash' => sha1($this->user->email_pending),
-            ]
+            ],
         );
     }
 }

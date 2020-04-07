@@ -22,7 +22,8 @@ class LoginControllerTest extends TestCase
         $this->postJson(route('auth.login'), [
             'email' => $user->email,
             'password' => '123',
-        ])->assertStatus(200)
+        ])
+            ->assertStatus(200)
             ->assertUrl('/login')
             ->assertComponent('Dashboard/Index');
     }

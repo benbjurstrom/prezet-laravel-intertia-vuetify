@@ -49,5 +49,4 @@ class LoginController extends Controller
     {
         return Inertia::render('Dashboard/Index');
     }
-
 }

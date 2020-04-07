@@ -64,6 +64,6 @@ class RegistrationController extends Controller
      */
     protected function create(array $data)
     {
-        return (new UserRepository)->createFromEmail($data['email'], $data['name'], $data['password']);
+        return (new UserRepository())->createFromEmail($data['email'], $data['name'], $data['password']);
     }
 }

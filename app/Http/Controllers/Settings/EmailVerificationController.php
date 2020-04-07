@@ -55,23 +55,27 @@ class EmailVerificationController extends Controller
      */
     public function verify(Request $request): RedirectResponse
     {
-        if (! hash_equals((string) $request->route('id'), (string) $request->user()->getKey())) {
-            throw new AuthorizationException;
+        if (!hash_equals((string) $request->route('id'), (string) $request->user()->getKey())) {
+            throw new AuthorizationException();
         }
 
-        if (! hash_equals((string) $request->route('hash'), sha1($request->user()->getEmailForVerification()))) {
-            throw new AuthorizationException;
+        if (!hash_equals((string) $request->route('hash'), sha1($request->user()->getEmailForVerification()))) {
+            throw new AuthorizationException();
         }
 
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->route('settings')->with('success', 'Email Already Verified.');
+            return redirect()
+                ->route('settings')
+                ->with('success', 'Email Already Verified.');
         }
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
         }
 
-        return redirect()->route('settings')->with('success', 'Email Verified.');
+        return redirect()
+            ->route('settings')
+            ->with('success', 'Email Verified.');
     }
 
     /**
@@ -83,11 +87,15 @@ class EmailVerificationController extends Controller
     public function resend(Request $request)
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->route('settings')->with('error', 'Email Already Verified.');
+            return redirect()
+                ->route('settings')
+                ->with('error', 'Email Already Verified.');
         }
 
         $request->user()->sendEmailVerificationNotification();
 
-        return redirect()->route('settings')->with('success', 'Verification Resent.');
+        return redirect()
+            ->route('settings')
+            ->with('success', 'Verification Resent.');
     }
 }

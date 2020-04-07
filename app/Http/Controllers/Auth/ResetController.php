@@ -66,17 +66,19 @@ class ResetController extends Controller
     public function store(Request $request, AuthService $as)
     {
         $data = $this->validate($request, [
-            'email'     => 'required|string|email|max:255'
+            'email' => 'required|string|email|max:255',
         ]);
 
-        $user = (new User)->where('email', $data['email'])->first();
+        $user = (new User())->where('email', $data['email'])->first();
 
         // silently skip if the user is not found for privacy reasons
         if ($user) {
             $as->sendForgotPasswordEmail($user);
         }
 
-        return redirect()->route('auth.login')->with('success', 'A password reset email has been sent.');
+        return redirect()
+            ->route('auth.login')
+            ->with('success', 'A password reset email has been sent.');
     }
 
     /**
@@ -89,13 +91,11 @@ class ResetController extends Controller
      */
     public function edit(User $user, string $token)
     {
-        throw_unless(Password::tokenExists($user, $token), (new ModelNotFoundException)->setModel(
-            $user
-        ));
+        throw_unless(Password::tokenExists($user, $token), (new ModelNotFoundException())->setModel($user));
 
         return Inertia::render('Auth/Reset', [
             'userId' => $user->id,
-            'token' => $token
+            'token' => $token,
         ]);
     }
 
@@ -113,11 +113,13 @@ class ResetController extends Controller
     public function update(User $user, string $token, Request $request, AuthService $as)
     {
         $this->validate($request, [
-            'password'  => 'required|string|min:3',
+            'password' => 'required|string|min:3',
         ]);
 
         $user = $as->updatePasswordFromToken($user, $token, $request->password);
 
-        return redirect()->route('auth.login')->with('success', 'Your password has successfully been reset. Please login below.');
+        return redirect()
+            ->route('auth.login')
+            ->with('success', 'Your password has successfully been reset. Please login below.');
     }
 }

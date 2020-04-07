@@ -40,13 +40,18 @@ class EmailUpdateController extends Controller
             'email' => 'required|email|max:255',
         ]);
 
-        throw_if($request->user()->email === $data['email'], ValidationException::withMessages([
-            'email' => ['The given email is already associated with this account.']
-        ]));
+        throw_if(
+            $request->user()->email === $data['email'],
+            ValidationException::withMessages([
+                'email' => ['The given email is already associated with this account.'],
+            ]),
+        );
 
         $es->emailChangeRequest($data['email']);
 
-        return redirect()->route('settings')->with('success', 'Additional instructions have been sent to ' . $data['email']);
+        return redirect()
+            ->route('settings')
+            ->with('success', 'Additional instructions have been sent to ' . $data['email']);
     }
 
     /**
@@ -60,12 +65,12 @@ class EmailUpdateController extends Controller
     public function verify(Request $request, EmailService $es): RedirectResponse
     {
         $user = auth()->user();
-        if (! hash_equals((string) $request->route('id'), $user->id)) {
-            throw new AuthorizationException;
+        if (!hash_equals((string) $request->route('id'), $user->id)) {
+            throw new AuthorizationException();
         }
 
-        if (! hash_equals((string) $request->route('hash'), (string) sha1($user->email_pending))) {
-            throw new AuthorizationException;
+        if (!hash_equals((string) $request->route('hash'), (string) sha1($user->email_pending))) {
+            throw new AuthorizationException();
         }
 
         $user->email = $user->email_pending;
@@ -73,7 +78,9 @@ class EmailUpdateController extends Controller
         $user->email_verified_at = Carbon::now();
         $user->save();
 
-        return redirect()->route('settings')->with('success', 'Email change has been canceled.');
+        return redirect()
+            ->route('settings')
+            ->with('success', 'Email change has been canceled.');
     }
 
     /**
@@ -87,6 +94,8 @@ class EmailUpdateController extends Controller
         $user->email_pending = null;
         $user->save();
 
-        return redirect()->route('settings')->with('success', 'Email Canceled.');
+        return redirect()
+            ->route('settings')
+            ->with('success', 'Email Canceled.');
     }
 }

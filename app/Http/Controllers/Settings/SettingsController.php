@@ -13,7 +13,7 @@ class SettingsController extends Controller
         $user = auth()->user();
         return Inertia::render('Settings/Index', [
             'user' => $user,
-            'twoFactor' => $user->hasTwoFactorEnabled()
+            'twoFactor' => $user->hasTwoFactorEnabled(),
         ]);
     }
 }

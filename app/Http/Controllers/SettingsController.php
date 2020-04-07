@@ -14,10 +14,11 @@ class SettingsController extends Controller
     public function index(): Response
     {
         return Inertia::render('Organizations/Index', [
-            'organizations' => Auth::user()->account->organizations()
+            'organizations' => Auth::user()
+                ->account->organizations()
                 ->withTrashed()
                 ->orderBy('name')
-                ->get(['id', 'name', 'phone', 'city', 'deleted_at'])
+                ->get(['id', 'name', 'phone', 'city', 'deleted_at']),
         ]);
     }
 }

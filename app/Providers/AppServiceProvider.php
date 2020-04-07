@@ -39,13 +39,15 @@ class AppServiceProvider extends ServiceProvider
             'auth' => function () {
                 $user = Auth::user();
                 return [
-                    'user' => $user ? [
-                        'id' => $user->id,
-                        'name' => $user->name,
-                        'email' => $user->email,
-                        'gravatar' => md5($user->email),
-                        'email_verified' => (bool) $user->email_verified_at
-                    ] : null,
+                    'user' => $user
+                        ? [
+                            'id' => $user->id,
+                            'name' => $user->name,
+                            'email' => $user->email,
+                            'gravatar' => md5($user->email),
+                            'email_verified' => (bool) $user->email_verified_at,
+                        ]
+                        : null,
                 ];
             },
             'flash' => function () {
@@ -55,12 +57,14 @@ class AppServiceProvider extends ServiceProvider
             },
             'errors' => function () {
                 return Session::get('errors')
-                    ? Session::get('errors')->getBag('default')->getMessages()
+                    ? Session::get('errors')
+                        ->getBag('default')
+                        ->getMessages()
                     : (object) [];
             },
             'release' => function () {
                 return config('version.release');
-            }
+            },
         ]);
     }
     protected function registerGlide()
@@ -115,33 +119,36 @@ class AppServiceProvider extends ServiceProvider
                         $window['last'],
                     ]);
 
-                    return Collection::make($elements)->flatMap(function ($item) {
-                        if (is_array($item)) {
-                            return Collection::make($item)->map(function ($url, $page) {
+                    return Collection::make($elements)
+                        ->flatMap(function ($item) {
+                            if (is_array($item)) {
+                                return Collection::make($item)->map(function ($url, $page) {
+                                    return [
+                                        'url' => $url,
+                                        'label' => $page,
+                                        'active' => $this->currentPage() === $page,
+                                    ];
+                                });
+                            } else {
                                 return [
-                                    'url' => $url,
-                                    'label' => $page,
-                                    'active' => $this->currentPage() === $page,
+                                    [
+                                        'url' => null,
+                                        'label' => '...',
+                                        'active' => false,
+                                    ],
                                 ];
-                            });
-                        } else {
-                            return [
-                                [
-                                    'url' => null,
-                                    'label' => '...',
-                                    'active' => false,
-                                ],
-                            ];
-                        }
-                    })->prepend([
-                        'url' => $this->previousPageUrl(),
-                        'label' => 'Previous',
-                        'active' => false,
-                    ])->push([
-                        'url' => $this->nextPageUrl(),
-                        'label' => 'Next',
-                        'active' => false,
-                    ]);
+                            }
+                        })
+                        ->prepend([
+                            'url' => $this->previousPageUrl(),
+                            'label' => 'Previous',
+                            'active' => false,
+                        ])
+                        ->push([
+                            'url' => $this->nextPageUrl(),
+                            'label' => 'Next',
+                            'active' => false,
+                        ]);
                 }
             };
         });

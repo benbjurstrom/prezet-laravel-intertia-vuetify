@@ -33,7 +33,7 @@ class PasswordReset extends Mailable
      */
     public function __construct(User $user, $token)
     {
-        $this->user  = $user;
+        $this->user = $user;
         $this->token = $token;
     }
 
@@ -47,11 +47,12 @@ class PasswordReset extends Mailable
         return $this->subject('Password Reset')
             ->markdown('mail')
             ->with([
-                'message' => 'You are receiving this email because we received a password reset request for your account.',
+                'message' =>
+                    'You are receiving this email because we received a password reset request for your account.',
                 'action' => [
                     'text' => 'Reset Password',
-                    'url' => $this->resetUrl()
-                ]
+                    'url' => $this->resetUrl(),
+                ],
             ]);
     }
 
@@ -68,7 +69,7 @@ class PasswordReset extends Mailable
             [
                 'user' => $this->user->id,
                 'token' => $this->token,
-            ]
+            ],
         );
     }
 }

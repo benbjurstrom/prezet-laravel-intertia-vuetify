@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Account extends Model
 {
-
     public function users(): HasMany
     {
         return $this->hasMany(User::class);

@@ -55,9 +55,7 @@ class AuthService
      */
     public function getTokenUser($email, $token): User
     {
-        $user = (new User)
-            ->where('email', $email)
-            ->first();
+        $user = (new User())->where('email', $email)->first();
 
         $this->validate(!empty($user));
         $this->validate(Password::tokenExists($user, $token));
@@ -82,9 +80,12 @@ class AuthService
     public function validateAuthenticatedUsersPassword($password): User
     {
         $user = auth()->user();
-        throw_unless(Hash::check($password, $user->password), ValidationException::withMessages([
-            'password'    => ['The given credentials are incorrect']
-        ]));
+        throw_unless(
+            Hash::check($password, $user->password),
+            ValidationException::withMessages([
+                'password' => ['The given credentials are incorrect'],
+            ]),
+        );
 
         return $user;
     }
@@ -95,15 +96,21 @@ class AuthService
      */
     protected function validate($subject): void
     {
-        throw_unless($subject, ValidationException::withMessages([
-            'token'    => ['The given credentials are incorrect']
-        ]));
+        throw_unless(
+            $subject,
+            ValidationException::withMessages([
+                'token' => ['The given credentials are incorrect'],
+            ]),
+        );
     }
 
     protected function validateUserNotVerified(User $user): void
     {
-        throw_if($user->hasVerifiedEmail(), ValidationException::withMessages([
-            'id'    => ['The current user email address is already verified.']
-        ]));
+        throw_if(
+            $user->hasVerifiedEmail(),
+            ValidationException::withMessages([
+                'id' => ['The current user email address is already verified.'],
+            ]),
+        );
     }
 }

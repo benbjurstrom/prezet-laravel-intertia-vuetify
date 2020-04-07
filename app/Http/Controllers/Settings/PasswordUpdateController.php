@@ -13,7 +13,7 @@ class PasswordUpdateController extends Controller
     public function update(): RedirectResponse
     {
         $data = Request::validate([
-            'password'  => 'required|string|min:3',
+            'password' => 'required|string|min:3',
         ]);
 
         $user = auth()->user();
@@ -22,6 +22,8 @@ class PasswordUpdateController extends Controller
 
         Mail::to($user)->queue(new PasswordChangeNotification($user));
 
-        return redirect()->route('settings')->with('success', 'Password updated.');
+        return redirect()
+            ->route('settings')
+            ->with('success', 'Password updated.');
     }
 }

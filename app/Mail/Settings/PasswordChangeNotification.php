@@ -37,7 +37,8 @@ class PasswordChangeNotification extends Mailable
         return $this->subject('Password Change Notification')
             ->markdown('mail')
             ->with([
-                'message' => 'Your password has been changed. If you did not request this change please contact test@test.com for help.',
+                'message' =>
+                    'Your password has been changed. If you did not request this change please contact test@test.com for help.',
             ]);
     }
 }

@@ -13,7 +13,6 @@ class ReauthenticateController extends Controller
 {
     use Reauthenticates;
 
-
     /**
      * @return Response
      */

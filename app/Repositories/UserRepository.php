@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Repositories;
-
 
 use App\Models\Account;
 use App\Models\User;
@@ -17,7 +15,8 @@ class UserRepository
      * @return User
      * @throws Throwable
      */
-    public function createFromEmail(string $email, string $name, string $password): User {
+    public function createFromEmail(string $email, string $name, string $password): User
+    {
         return \DB::transaction(function () use ($email, $name, $password) {
             $user = User::create([
                 'name' => $name,

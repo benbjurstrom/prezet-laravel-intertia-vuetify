@@ -19,16 +19,19 @@ class EnforceTwoFactorAuth extends \DarkGhostHunter\Laraguard\Listeners\EnforceT
      */
     protected function throwResponse(TwoFactorAuthenticatable $user, bool $error = false)
     {
-        throw_if($error, ValidationException::withMessages([
-            'code' => ['The given 2FA Code is invalid.']
-        ]));
+        throw_if(
+            $error,
+            ValidationException::withMessages([
+                'code' => ['The given 2FA Code is invalid.'],
+            ]),
+        );
 
-        $data =  [
-            'action'      => request()->fullUrl(),
+        $data = [
+            'action' => request()->fullUrl(),
             'credentials' => $this->credentials,
-            'user'        => $user,
-            'error'       => $error,
-            'remember'    => $this->remember,
+            'user' => $user,
+            'error' => $error,
+            'remember' => $this->remember,
         ];
 
         throw new EnforceTwoFactorAuthException($data);

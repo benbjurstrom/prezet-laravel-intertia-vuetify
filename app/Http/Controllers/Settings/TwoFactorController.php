@@ -24,10 +24,10 @@ class TwoFactorController extends Controller
 
         return Inertia::render('Settings/TwoFactor', [
             'twoFactor' => [
-                'qrCode' =>  base64_encode($tfa->toQr()),     // As QR Code
-                'string'  => $tfa->toString(), // As a string
+                'qrCode' => base64_encode($tfa->toQr()), // As QR Code
+                'string' => $tfa->toString(), // As a string
                 // 'uri'     => $tfa->toUri(),    // As "otpauth://" URI.
-            ]
+            ],
         ]);
     }
 
@@ -40,18 +40,21 @@ class TwoFactorController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'code'  => 'required|string',
+            'code' => 'required|string',
         ]);
 
-        $success = $request->user()->confirmTwoFactorAuth(
-            $request->code
+        $success = $request->user()->confirmTwoFactorAuth($request->code);
+
+        throw_unless(
+            $success,
+            ValidationException::withMessages([
+                'code' => ['The given code was invalid'],
+            ]),
         );
 
-        throw_unless($success, ValidationException::withMessages([
-            'code' => ['The given code was invalid']
-        ]));
-
-        return redirect()->route('settings')->with('success', 'Two Factor Authentication Has Been Enabled.');
+        return redirect()
+            ->route('settings')
+            ->with('success', 'Two Factor Authentication Has Been Enabled.');
     }
 
     /**
@@ -59,7 +62,11 @@ class TwoFactorController extends Controller
      */
     public function destroy()
     {
-        auth()->user()->disableTwoFactorAuth();
-        return redirect()->route('settings')->with('success', 'Two Factor Authentication Has Been Disabled.');
+        auth()
+            ->user()
+            ->disableTwoFactorAuth();
+        return redirect()
+            ->route('settings')
+            ->with('success', 'Two Factor Authentication Has Been Disabled.');
     }
 }

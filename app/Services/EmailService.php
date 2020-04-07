@@ -22,15 +22,18 @@ class EmailService
             $user = auth()->user();
 
             // verify email is different
-            throw_if($user->email === $email, ValidationException::withMessages([
-                'email_pending'    => ['The given email is already associated with this account.']
-            ]));
+            throw_if(
+                $user->email === $email,
+                ValidationException::withMessages([
+                    'email_pending' => ['The given email is already associated with this account.'],
+                ]),
+            );
 
             $user->email_pending = $email;
             $user->save();
 
             // Only send the mail if the email doesn't already exist
-            if(!$this->emailExists($user->email_pending)){
+            if (!$this->emailExists($user->email_pending)) {
                 // Notify current email
                 Mail::to($user)->queue(new EmailChangeNotification($user));
 
@@ -45,6 +48,6 @@ class EmailService
 
     protected function emailExists(string $email): bool
     {
-        return (new User)->where('email', $email)->exists();
+        return (new User())->where('email', $email)->exists();
     }
 }

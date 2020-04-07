@@ -20,7 +20,6 @@ class EmailChangeNotification extends Mailable
      */
     public $user;
 
-
     /**
      * Create a new message instance.
      * @param User $user
@@ -28,7 +27,7 @@ class EmailChangeNotification extends Mailable
      */
     public function __construct(User $user)
     {
-        $this->user  = $user;
+        $this->user = $user;
     }
 
     /**
@@ -41,13 +40,16 @@ class EmailChangeNotification extends Mailable
         return $this->subject('Email Change Notification')
             ->markdown('mail')
             ->with([
-                'message' => 'We received a request to update your email to ' . $this->user->email_pending . '.
+                'message' =>
+                    'We received a request to update your email to ' .
+                    $this->user->email_pending .
+                    '.
                 An email has been sent to that address with further instructions to complete the change.
                 If you did not initiate this change you should cancel the request below and immediately update your password.',
                 'action' => [
                     'text' => 'Cancel Email Update',
-                    'url' => $this->cancellationUrl()
-                ]
+                    'url' => $this->cancellationUrl(),
+                ],
             ]);
     }
 
@@ -64,7 +66,7 @@ class EmailChangeNotification extends Mailable
             [
                 'id' => $this->user->id,
                 'hash' => sha1($this->user->email_pending),
-            ]
+            ],
         );
     }
 }

@@ -17,7 +17,6 @@ class EmailControllerTest extends TestCase
      */
     public function testStore()
     {
-
         $email = $this->faker->email;
 
         $user = factory(User::class)->create();
@@ -32,7 +31,7 @@ class EmailControllerTest extends TestCase
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
             'email' => $user->email,
-            'email_pending' => $email
+            'email_pending' => $email,
         ]);
 
         // Mail::assertQueued(EmailChangeVerification::class);
@@ -44,21 +43,21 @@ class EmailControllerTest extends TestCase
     public function testUpdate()
     {
         $email = $this->faker->email;
-        $user  = factory(User::class)
+        $user = factory(User::class)
             ->states(['withAgreements'])
             ->create(['email_pending' => $email]);
         auth()->login($user);
 
         $route = URL::signedRoute('auth.email.change.update', [
             'id' => $user->id,
-            'email_pending' => $email
+            'email_pending' => $email,
         ]);
 
         $this->patchJson($route)->assertStatus(200);
 
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
-            'email' => $email
+            'email' => $email,
         ]);
     }
 }
