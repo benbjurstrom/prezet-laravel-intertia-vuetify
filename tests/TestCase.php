@@ -10,6 +10,7 @@ use PHPUnit\Framework\Assert;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use ReflectionClass;
+use ReflectionException;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -20,7 +21,7 @@ abstract class TestCase extends BaseTestCase
      * @param string $method
      * @param array $arguments
      * @return object
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function invokePrivateMethod($instance, $method, array $arguments = [])
     {
@@ -37,10 +38,12 @@ abstract class TestCase extends BaseTestCase
         $this->withoutMiddleware(Reauthenticate::class);
 
         TestResponse::macro('url', function () {
+            /** @var \Illuminate\Foundation\Testing\TestResponse $this */
             return json_decode(json_encode($this->original->getData()['page']['url']), JSON_OBJECT_AS_ARRAY);
         });
 
         TestResponse::macro('assertUrl', function ($value) {
+            /** @var \Illuminate\Foundation\Testing\TestResponse $this */
             Assert::assertEquals($value, $this->url());
 
             return $this;
@@ -73,6 +76,7 @@ abstract class TestCase extends BaseTestCase
         });
 
         TestResponse::macro('assertPropValue', function ($key, $value) {
+            /** @var \Illuminate\Foundation\Testing\TestResponse $this */
             $this->assertHasProp($key);
 
             if (is_callable($value)) {
@@ -85,6 +89,7 @@ abstract class TestCase extends BaseTestCase
         });
 
         TestResponse::macro('assertPropCount', function ($key, $count) {
+            /** @var \Illuminate\Foundation\Testing\TestResponse $this */
             $this->assertHasProp($key);
 
             Assert::assertCount($count, $this->props($key));

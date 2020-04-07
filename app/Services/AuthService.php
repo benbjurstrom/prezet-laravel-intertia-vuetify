@@ -10,16 +10,18 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Hash;
+use Throwable;
 
 class AuthService
 {
     /**
      * @param User $user
-     * @param $token
-     * @param $password
+     * @param string $token
+     * @param string $password
      * @return User
+     * @throws Throwable
      */
-    public function updatePasswordFromToken(User $user, $token, $password): User
+    public function updatePasswordFromToken(User $user, string $token, string $password): User
     {
         return \DB::transaction(function () use ($user, $token, $password) {
             $user = $this->getTokenUser($user->email, $token);
@@ -57,7 +59,7 @@ class AuthService
             ->where('email', $email)
             ->first();
 
-        $this->validate($user);
+        $this->validate(!empty($user));
         $this->validate(Password::tokenExists($user, $token));
         return $user;
     }

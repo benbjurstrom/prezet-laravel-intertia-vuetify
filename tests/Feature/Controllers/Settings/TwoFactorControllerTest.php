@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controllers\Auth;
+namespace Tests\Feature\Controllers\Settings;
 
 use App\Mail\EmailChangeVerification;
 use Illuminate\Support\Facades\Mail;

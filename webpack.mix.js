@@ -55,6 +55,7 @@ mix.webpackConfig(webpack => {
           loader: 'eslint-loader',
           exclude: /(node_modules)/,
           options: {
+            configFile: 'quality/.eslintrc.js',
             emitError: true,
             emitWarning: true,
             failOnError: true,

@@ -23,6 +23,8 @@
         "inertiajs/inertia-laravel": "^0.1",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "league/flysystem-cached-adapter": "^1.0",
         "league/glide": "2.0.x-dev",
         "mpociot/reauthenticate": "^1.4",
         "reinink/remember-query-strings": "^0.1.0",
@@ -30,11 +32,13 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
+        "barryvdh/laravel-ide-helper": "^2.6",
         "beyondcode/laravel-dump-server": "^1.0",
         "facade/ignition": "^1.4",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
+        "nunomaduro/larastan": "^0.5.5",
         "phpmd/phpmd": "^2.8",
         "phpunit/phpunit": "^8.0"
     },

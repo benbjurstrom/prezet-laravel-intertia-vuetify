@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
+use Throwable;
 
 class EmailVerificationController extends Controller
 {
@@ -49,8 +50,7 @@ class EmailVerificationController extends Controller
      * Mark the authenticated user's email address as verified.
      *
      * @param Request $request
-     * @return Response
-     *
+     * @return Response | RedirectResponse
      * @throws AuthorizationException
      */
     public function verify(Request $request)

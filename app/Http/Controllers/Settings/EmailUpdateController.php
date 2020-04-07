@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class EmailUpdateController extends Controller
 {
@@ -52,13 +53,11 @@ class EmailUpdateController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param User $user
      * @param EmailService $es
-     * @return JsonResponse
+     * @return RedirectResponse
      * @throws AuthorizationException
-     * @throws \Throwable
      */
-    public function verify(Request $request, EmailService $es)
+    public function verify(Request $request, EmailService $es): RedirectResponse
     {
         $user = auth()->user();
         if (! hash_equals((string) $request->route('id'), $user->id)) {
@@ -80,9 +79,9 @@ class EmailUpdateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @return Response
+     * @return RedirectResponse
      */
-    public function destroy()
+    public function destroy(): RedirectResponse
     {
         $user = $user = auth()->user();
         $user->email_pending = null;

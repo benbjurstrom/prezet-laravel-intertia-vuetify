@@ -14,7 +14,7 @@ class TwoFactorAuthentication extends \DarkGhostHunter\Laraguard\Eloquent\TwoFac
     /**
      * Sets the Shared Secret attribute to its binary form.
      *
-     * @param $value
+     * @param string $value
      */
     protected function setSharedSecretAttribute($value)
     {

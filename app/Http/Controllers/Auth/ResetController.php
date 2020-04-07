@@ -90,7 +90,7 @@ class ResetController extends Controller
     public function edit(User $user, string $token)
     {
         throw_unless(Password::tokenExists($user, $token), (new ModelNotFoundException)->setModel(
-            $user, $token
+            $user
         ));
 
         return Inertia::render('Auth/Reset', [

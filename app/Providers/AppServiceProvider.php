@@ -44,8 +44,7 @@ class AppServiceProvider extends ServiceProvider
                         'name' => $user->name,
                         'email' => $user->email,
                         'gravatar' => md5($user->email),
-                        'email_verified' => (bool) $user->email_verified_at,
-                        'role' => $user->role,
+                        'email_verified' => (bool) $user->email_verified_at
                     ] : null,
                 ];
             },

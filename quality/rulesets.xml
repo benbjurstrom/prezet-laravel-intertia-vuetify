@@ -27,7 +27,7 @@
     </rule>
 
     <!-- exclusions -->
-    <!--<exclude-pattern>foo</exclude-pattern>-->
+    <exclude-pattern>Providers/AppServiceProvider</exclude-pattern>
 </ruleset>
 <!--(\$[a-zA-Z]*)_([a-z]{1,1})([a-zA-Z]*)-->
 <!--$1\U$2\L$3-->

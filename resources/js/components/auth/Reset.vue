@@ -2,7 +2,7 @@
   <form @submit.prevent="submit">
     <v-container>
       <v-card-text>
-        Your password must consist of At least 8 characters, A mixture of both uppercase and lowercase letters and A mixture of letters and numbers.
+        Your password must consist of At least 8 characters, A mixture of both uppercase and lowercase letters, and A mixture of letters and numbers.
       </v-card-text>
       <v-card-text>
         <v-text-field
