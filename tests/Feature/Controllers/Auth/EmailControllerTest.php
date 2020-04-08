@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Controllers\Auth;
 
-use App\Mail\EmailChangeVerification;
+use App\Mail\Settings\EmailChangeVerification;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -22,11 +22,15 @@ class EmailControllerTest extends TestCase
         $user = factory(User::class)->create();
         auth()->login($user);
 
-        // Mail::fake([EmailChangeVerification::class]);
+        Mail::fake([EmailChangeVerification::class]);
 
-        $this->postJson(route('email.update'), [
-            'email' => $email,
-        ])->assertStatus(302);
+        $this->followingRedirects()
+            ->post(route('email.update'), [
+                'email' => $email,
+            ])
+            ->assertStatus(200)
+            ->assertComponent('Settings/Index')
+            ->assertPropValue('user.email_pending', $email);
 
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
@@ -34,7 +38,7 @@ class EmailControllerTest extends TestCase
             'email_pending' => $email,
         ]);
 
-        // Mail::assertQueued(EmailChangeVerification::class);
+        Mail::assertQueued(EmailChangeVerification::class);
     }
 
     /**
@@ -44,16 +48,20 @@ class EmailControllerTest extends TestCase
     {
         $email = $this->faker->email;
         $user = factory(User::class)
-            ->states(['withAgreements'])
             ->create(['email_pending' => $email]);
         auth()->login($user);
 
-        $route = URL::signedRoute('auth.email.change.update', [
+        $route = URL::signedRoute('email.verify', [
             'id' => $user->id,
-            'email_pending' => $email,
+            'hash' => sha1($email),
         ]);
 
-        $this->patchJson($route)->assertStatus(200);
+        $this->followingRedirects()
+            ->get($route)
+            ->assertStatus(200)
+            ->assertComponent('Settings/Index')
+            ->assertPropValue('user.email', $email)
+            ->assertPropValue('user.email_pending', null);
 
         $this->assertDatabaseHas('users', [
             'id' => $user->id,

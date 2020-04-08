@@ -22,7 +22,7 @@ class TwoFactorControllerTest extends TestCase
 
         $this->get(route('settings.2fa.create'))
             ->assertStatus(200)
-            ->assertPropValue('as_string', $user->twoFactorAuth->toString());
+            ->assertPropValue('twoFactor.string', $user->twoFactorAuth->toString());
     }
 
     /**
