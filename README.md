@@ -1,73 +1,69 @@
-# Vuetify Ping CRM
+# [WIP] Prezet Intertia Vuetify 
+An opinionated [Laravel](https://laravel.com) preset running [Inertia.js](https://inertiajs.com/) and [Vuetify](https://vuetifyjs.com/en/getting-started/quick-start/)
 
-A demo application to illustrate how Inertia.js works. Implemented with Vuetify
+[![Push Status](https://github.com/benbjurstrom/prezet-intertia-vuetify/workflows/push/badge.svg?branch=master)](https://github.com/benbjurstrom/prezet-intertia-vuetify/workflows)
+[![License](https://poser.pugx.org/benbjurstrom/cognito-jwt-guard/license)](https://github.com/benbjurstrom/prezet-intertia-vuetify/workflows)
 
-![](https://raw.githubusercontent.com/xalunda/inertiajs-laravel-vuetify/master/screenshot.png)
 
-## Installation
+## Includes
+The following features are preconfigured. Check out the demo at [prezet.com]('https://prezet.com').
 
-Clone the repo locally:
+### User Features
+- Registration
+- Email Verification
+- Email Change w/ Verification
+- Password Change
+- Password Recovery
+- Two Factor Authentication [darkghosthunter/laraguard](https://github.com/DarkGhostHunter/Laraguard)
+- Reauthentication [mpociot/reauthenticate](https://github.com/mpociot/reauthenticate)
 
-```sh
-git clone https://github.com/xalunda/inertiajs-laravel-vuetify.git pingcrm-vuetify
-cd pingcrm-vuetify
+### Frontend Developer Features
+- Vuetify 2.2+
+- Inline form validation
+- Eslint w/ eslint-plugin-vue
+- Font Awesome 5
+
+### Backend Developer Features
+- PHP 7.4
+- Laravel 6
+- Postgres
+- Github workflow running tests and code quality
+- UUID primary keys
+- Example phpunit tests
+- Inline form validation
+- Docker compose development environment
+
+#### Docker Compose Features
+- Postgres Database
+- Redis Server
+- Mail Hog Dashboard
+- Laravel Queue Worker
+- Laravel Jobs Container
+
+## Quickstart
+Clone this repo into new project folder
+```shell
+git clone https://rezet-intertia-vuetify.git  prezet
+cd prezet
 ```
-
-Install PHP dependencies:
-
-```sh
-composer install
+Start the docker containers
+```shell
+docker-compose up
 ```
-
-Install NPM dependencies:
-
-```sh
-npm ci
-```
-
-Build assets:
-
-```sh
-npm run dev
-```
-
-Setup configuration:
-
-```sh
+Install the dependencies
+```shell
 cp .env.example .env
+docker exec prezet-phpfpm artisan key:generate
+docker exec prezet-phpfpm composer install
+docker exec prezet-phpfpm yarn install
 ```
-
-Generate application key:
-
-```sh
-php artisan key:generate
+Create the database, run the migrations, and seed the data
+```shell
+docker exec prezet-phpfpm php artisan db:create
+docker exec prezet-phpfpm php artisan migrate:fresh --seed
 ```
-
-Create an SQLite database. You can also use another database (MySQL, Postgres), simply update your configuration accordingly.
-
-```sh
-touch database/database.sqlite
+Login at http://localhost:8000
+```shell
+email: admin@example.com
+password: 123
 ```
-
-Run database migrations:
-
-```sh
-php artisan migrate
-```
-
-Run database seeder:
-
-```sh
-php artisan db:seed
-```
-
-Serving Laravel:
-
-```sh
-php artisan serve
-```
-
-You're ready to go! Visit Ping CRM in your browser, and login with:
-
-- **Username:** johndoe@example.com
-- **Password:** secret
