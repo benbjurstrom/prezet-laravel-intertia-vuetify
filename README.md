@@ -1,8 +1,7 @@
 # Prezet [Laravel + Intertia + Vuetify]
 An opinionated [Laravel](https://laravel.com) preset with [Inertia.js](https://inertiajs.com/) and [Vuetify](https://vuetifyjs.com/en/getting-started/quick-start/)
 
-[![Push Status](https://github.com/benbjurstrom/prezet-laravel-intertia-vuetify/workflows/push/badge.svg?branch=master)](https://github.com/benbjurstrom/prezet-laravel-intertia-vuetify/workflows)
-[![License](https://poser.pugx.org/benbjurstrom/prezet-laravel-intertia-vuetify/license)](https://github.com/benbjurstrom/prezet-laravel-intertia-vuetify/workflows)
+[![Test Status](https://github.com/benbjurstrom/prezet-laravel-intertia-vuetify/workflows/test/badge.svg?branch=master)](https://github.com/benbjurstrom/prezet-laravel-intertia-vuetify)
 
 
 ## Includes

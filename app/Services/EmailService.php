@@ -38,7 +38,9 @@ class EmailService
                 Mail::to($user)->queue(new EmailChangeNotification($user));
 
                 // Send verification to email_pending
-                Mail::to([['email' => $user->email_pending, 'name' => $user->name]])->queue(new EmailChangeVerification($user));
+                Mail::to([['email' => $user->email_pending, 'name' => $user->name]])->queue(
+                    new EmailChangeVerification($user),
+                );
             }
 
             return $user;

@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Mpociot\Reauthenticate\Middleware\Reauthenticate;
 use PHPUnit\Framework\Assert;
-use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Testing\TestResponse;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use ReflectionClass;
 use ReflectionException;

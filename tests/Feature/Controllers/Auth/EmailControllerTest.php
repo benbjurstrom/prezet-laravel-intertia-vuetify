@@ -47,8 +47,7 @@ class EmailControllerTest extends TestCase
     public function testUpdate()
     {
         $email = $this->faker->email;
-        $user = factory(User::class)
-            ->create(['email_pending' => $email]);
+        $user = factory(User::class)->create(['email_pending' => $email]);
         auth()->login($user);
 
         $route = URL::signedRoute('email.verify', [
