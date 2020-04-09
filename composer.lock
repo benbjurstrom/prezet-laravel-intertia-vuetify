@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9309ebd8705e581e8ca4a5a9fb51fb33",
+    "content-hash": "448ea880fc5db48e9550794e45a37d75",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2036,12 +2036,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/benbjurstrom/reauthenticate.git",
-                "reference": "4a0c4794037f4920c2330054f718e1196e56bc11"
+                "reference": "e54f5bea2050c0fac27a17a6a82077c83048528d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/benbjurstrom/reauthenticate/zipball/4a0c4794037f4920c2330054f718e1196e56bc11",
-                "reference": "4a0c4794037f4920c2330054f718e1196e56bc11",
+                "url": "https://api.github.com/repos/benbjurstrom/reauthenticate/zipball/e54f5bea2050c0fac27a17a6a82077c83048528d",
+                "reference": "e54f5bea2050c0fac27a17a6a82077c83048528d",
                 "shasum": ""
             },
             "require": {
@@ -2050,7 +2050,7 @@
             },
             "require-dev": {
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^5.0"
+                "orchestra/testbench": "^3.5|^4.0|^5.0"
             },
             "type": "library",
             "autoload": {
@@ -2077,7 +2077,7 @@
             "support": {
                 "source": "https://github.com/benbjurstrom/reauthenticate/tree/master"
             },
-            "time": "2020-04-09T05:42:58+00:00"
+            "time": "2020-04-09T08:34:47+00:00"
         },
         {
             "name": "mtdowling/jmespath.php",
