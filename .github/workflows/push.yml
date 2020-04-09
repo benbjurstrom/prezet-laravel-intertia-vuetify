@@ -18,13 +18,13 @@ jobs:
       - name: Install Dependencies
         run: |
           docker exec prezet-phpfpm cp .env.example .env
-          docker exec prezet-phpfpm artisan key:generate
           docker exec prezet-phpfpm composer validate
           docker exec prezet-phpfpm composer install --prefer-dist --no-progress --no-suggest
           docker exec prezet-phpfpm yarn install --non-interactive
 
       - name: Run Artisan Commands
         run: |
+          docker exec prezet-phpfpm php artisan key:generate
           docker exec prezet-phpfpm php artisan db:create
           docker exec prezet-phpfpm php artisan migrate:fresh --seed
           docker exec prezet-phpfpm php artisan storage:link
