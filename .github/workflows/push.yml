@@ -17,9 +17,9 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          docker exec prezet-phpfpm composer validate
-          docker exec prezet-phpfpm composer install --prefer-dist --no-progress --no-suggest
-          docker exec prezet-phpfpm yarn install --non-interactive
+          sudo docker exec prezet-phpfpm composer validate
+          sudo docker exec prezet-phpfpm composer install --prefer-dist --no-progress --no-suggest
+          sudo docker exec prezet-phpfpm yarn install --non-interactive
 
       - name: Run Artisan Commands
         run: |

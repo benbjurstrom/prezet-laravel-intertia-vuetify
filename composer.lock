@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b3507a600762ca8e3e1a432f264101d7",
+    "content-hash": "7a6b49adf7f61365c297bfe9afe99c40",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -190,28 +190,28 @@
         },
         {
             "name": "darkghosthunter/laraguard",
-            "version": "dev-master",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/benbjurstrom/Laraguard.git",
-                "reference": "4a821104e084211db3ae20c91d3cd28d9af497bb"
+                "url": "https://github.com/DarkGhostHunter/Laraguard.git",
+                "reference": "17909c1434a0c27f0f9c1265de82af7f88ab847c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/benbjurstrom/Laraguard/zipball/4a821104e084211db3ae20c91d3cd28d9af497bb",
-                "reference": "4a821104e084211db3ae20c91d3cd28d9af497bb",
+                "url": "https://api.github.com/repos/DarkGhostHunter/Laraguard/zipball/17909c1434a0c27f0f9c1265de82af7f88ab847c",
+                "reference": "17909c1434a0c27f0f9c1265de82af7f88ab847c",
                 "shasum": ""
             },
             "require": {
-                "bacon/bacon-qr-code": "2.*",
+                "bacon/bacon-qr-code": "^2.0",
                 "ext-json": "*",
                 "illuminate/auth": "^6.15||^7.0",
                 "illuminate/support": "^6.15||^7.0",
-                "paragonie/constant_time_encoding": "2.*",
+                "paragonie/constant_time_encoding": "^2.0",
                 "php": "^7.2.15"
             },
             "require-dev": {
-                "orchestra/canvas": "^4.0||5.0",
+                "orchestra/canvas": "^4.0||^5.0",
                 "orchestra/testbench": "^4.0||^5.0",
                 "phpunit/phpunit": "^8.0"
             },
@@ -228,19 +228,7 @@
                     "DarkGhostHunter\\Laraguard\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "test-coverage": [
-                    "vendor/bin/phpunit --coverage-html coverage"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -255,15 +243,12 @@
             "homepage": "https://github.com/darkghosthunter/laraguard",
             "keywords": [
                 "2fa",
-                "authentication",
+                "Authentication",
                 "darkghosthunter",
                 "laraguard",
                 "laravel"
             ],
-            "support": {
-                "source": "https://github.com/benbjurstrom/Laraguard/tree/master"
-            },
-            "time": "2020-04-04T09:50:10+00:00"
+            "time": "2020-04-08T04:12:58+00:00"
         },
         {
             "name": "dasprid/enum",
@@ -7677,7 +7662,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "darkghosthunter/laraguard": 20,
         "league/glide": 20
     },
     "prefer-stable": true,
