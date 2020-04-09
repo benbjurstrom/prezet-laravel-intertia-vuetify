@@ -27,7 +27,7 @@ class EmailControllerTest extends TestCase
         $this->followingRedirects()
             ->post(route('email.update'), [
                 'email' => $email,
-            ])
+            ])->dump()
             ->assertStatus(200)
             ->assertComponent('Settings/Index')
             ->assertPropValue('user.email_pending', $email);

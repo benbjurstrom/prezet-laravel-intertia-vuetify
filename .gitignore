@@ -1,6 +1,7 @@
 /.idea
 /docker/data
 /node_modules
+/public/coverage
 /public/css
 /public/hot
 /public/js
