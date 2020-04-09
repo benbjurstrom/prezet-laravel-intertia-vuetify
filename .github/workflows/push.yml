@@ -17,21 +17,21 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          sudo docker exec prezet-phpfpm composer validate
-          sudo docker exec prezet-phpfpm composer install --prefer-dist --no-progress --no-suggest
-          sudo docker exec prezet-phpfpm yarn install --non-interactive
+          docker exec prezet-phpfpm sudo composer validate
+          docker exec prezet-phpfpm sudo composer install --prefer-dist --no-progress --no-suggest
+          docker exec prezet-phpfpm sudo yarn install --non-interactive
 
       - name: Run Artisan Commands
         run: |
-          docker exec prezet-phpfpm php artisan db:create
-          docker exec prezet-phpfpm php artisan migrate:fresh --seed
-          docker exec prezet-phpfpm php artisan storage:link
+          docker exec prezet-phpfpm sudo php artisan db:create
+          docker exec prezet-phpfpm sudo php artisan migrate:fresh --seed
+          docker exec prezet-phpfpm sudo php artisan storage:link
 
       - name: Run Code Quality Checks
         run: |
-          yarn run prettier --config quality/.prettierrc.yaml --check app tests
-          php vendor/bin/phpmd app,tests text quality/rulesets.xml
-          php vendor/bin/phpstan analyse -c quality/phpstan.neon --no-ansi --no-progress
+          docker exec prezet-phpfpm sudo yarn run prettier --config quality/.prettierrc.yaml --check app tests
+          docker exec prezet-phpfpm sudo php vendor/bin/phpmd app,tests text quality/rulesets.xml
+          docker exec prezet-phpfpm sudo php vendor/bin/phpstan analyse -c quality/phpstan.neon --no-ansi --no-progress
 
       - name: Run PHPUnit Tests and Create Coverage Report
-        run: docker exec prezet-phpfpm /usr/bin/phpdbg7 -qrr /usr/local/bin/phpunit --coverage-html public/coverage --coverage-text --colors=never --configuration phpunit.xml --testsuite Unit,Feature
+        run: docker exec prezet-phpfpm sudo /usr/bin/phpdbg7 -qrr /usr/local/bin/phpunit --coverage-html public/coverage --coverage-text --colors=never --configuration phpunit.xml --testsuite Unit,Feature
