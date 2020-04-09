@@ -36,4 +36,5 @@ jobs:
           docker exec prezet-phpfpm php vendor/bin/phpstan analyse -c quality/phpstan.neon --no-ansi --no-progress
 
       - name: Run PHPUnit Tests and Create Coverage Report
+        run: docker exec prezet-phpfpm phpunit
         run: docker exec prezet-phpfpm /usr/bin/phpdbg7 -qrr /usr/local/bin/phpunit --coverage-html public/coverage --coverage-text --colors=never --configuration phpunit.xml --testsuite Unit,Feature
