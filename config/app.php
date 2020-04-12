@@ -54,7 +54,19 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'asset_url' => env('ASSET_URL', null),
+    /*
+    |--------------------------------------------------------------------------
+    | Asset URL
+    |--------------------------------------------------------------------------
+    |
+    | Because all of your assets will be served via S3 / CloudFront, you should
+    | always generate URLs to these assets using Laravel's asset helper. Vapor
+    | injects an ASSET_URL environment variable which Laravel's asset helper
+    | will use when constructing your URLs.
+    |
+    */
+
+    'assetUrl' => env('ASSET_URL', null),
 
     /*
     |--------------------------------------------------------------------------

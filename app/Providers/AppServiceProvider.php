@@ -50,6 +50,11 @@ class AppServiceProvider extends ServiceProvider
                         : null,
                 ];
             },
+            'config' => function () {
+                return [
+                    'assetUrl' => config('app.assetUrl'),
+                ];
+            },
             'flash' => function () {
                 return [
                     'success' => Session::get('success'),

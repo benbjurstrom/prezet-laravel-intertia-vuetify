@@ -13,7 +13,8 @@ class DatabaseSeeder extends Seeder
         $account = Account::create(['name' => 'Acme Corporation']);
 
         factory(User::class)->create([
-            'email' => 'admin@example.com'
+            'email' => 'admin@example.com',
+            'password' => env('ADMIN_PASSWORD', 123),
         ]);
 
         factory(User::class, 5)->create();

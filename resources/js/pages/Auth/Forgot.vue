@@ -18,7 +18,7 @@
         <v-col class="my-4">
           <v-img
             :max-height="120"
-            src="/img/logo.png"
+            :src="'/img/logo.png' | assetUrl"
             contain
           />
         </v-col>

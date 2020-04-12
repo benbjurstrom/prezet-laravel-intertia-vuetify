@@ -7,9 +7,9 @@ Vue.filter('localDateTime', (val) => {
 })
 
 Vue.filter('assetUrl', function (url) {
-  // if (!this.$page.assetUrl) {
-  return url
-  // }
+  if (!Vue.prototype.$page.config.assetUrl) {
+    return url
+  }
 
-  // return window.config.assetUrl + url
+  return Vue.prototype.$page.config.assetUrl + url
 })

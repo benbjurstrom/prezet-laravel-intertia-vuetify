@@ -14,7 +14,7 @@
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>
-        <v-img tile contain max-height="45" max-width="45" src="/img/logo.png" />
+        <v-img tile contain max-height="45" max-width="45" :src="'/img/logo.png' | assetUrl" />
       </v-toolbar-title>
       <v-spacer />
       <v-toolbar-items>

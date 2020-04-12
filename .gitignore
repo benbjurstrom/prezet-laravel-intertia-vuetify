@@ -5,6 +5,7 @@
 /public/css
 /public/hot
 /public/js
+/public/*.js
 /public/mix-manifest.json
 /public/storage
 /storage/*.key
@@ -20,3 +21,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+.vapor/
+.env.production
+.env.staging
+.env.demo

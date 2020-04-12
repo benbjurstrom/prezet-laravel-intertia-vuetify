@@ -1,9 +1,7 @@
-require('laravel-mix-versionhash')
-require('laravel-mix-purgecss')
 const mix = require('laravel-mix')
 const path = require('path')
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
-const ASSET_URL = (mix.inProduction()) ? process.env.ASSET_URL + '/' : '/'
+const ASSET_URL = (mix.inProduction() && process.env.ASSET_URL) ? process.env.ASSET_URL + '/' : '/'
 
 /*
 |--------------------------------------------------------------------------
@@ -23,11 +21,8 @@ mix.js('resources/js/app.js', 'public/js')
   })
   .disableNotifications()
 
-if (mix.inProduction()) {
-  mix
-    .purgeCss()
-  // .extract() // Disabled until resolved: https://github.com/JeffreyWay/laravel-mix/issues/1889
-} else {
+if (!mix.inProduction()) {
+  require('laravel-mix-versionhash')
   mix.sourceMaps()
     .versionHash()
 }
@@ -40,7 +35,9 @@ mix.webpackConfig(webpack => {
         'process.env.ASSET_PATH': JSON.stringify(ASSET_URL)
       })
     ],
-    output: { chunkFilename: 'js/[name].js?id=[chunkhash]' },
+    output: {
+      publicPath: ASSET_URL
+    },
     resolve: {
       alias: {
         vue$: 'vue/dist/vue.runtime.esm.js',
