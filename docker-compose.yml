@@ -25,7 +25,7 @@ services:
 
   phpfpm:
     container_name: prezet-phpfpm
-    image: local-php-laravel
+    image: benbjurstrom/php-laravel:0.2.0
     # image: benbjurstrom/php-laravel:0.2.0
     environment:
       APP_MODE: app
