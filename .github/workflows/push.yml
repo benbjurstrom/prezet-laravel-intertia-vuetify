@@ -1,12 +1,10 @@
-name: tests
+name: push
 
 on: [push, pull_request]
 
 jobs:
-  tests:
-
+  test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
 
@@ -40,3 +38,20 @@ jobs:
 
       - name: Run PHPUnit Tests and Create Coverage Report
         run: docker exec prezet-phpfpm /usr/bin/phpdbg7 -qrr /usr/local/bin/phpunit --coverage-html public/coverage --coverage-text --colors=never --configuration phpunit.xml --testsuite Unit,Feature
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: benbjurstrom/php-laravel:0.2.0
+    needs: tests
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          composer install --no-dev --classmap-authoritative
+          artisan version "GITHUB_REF"
+
+      - name: Deploy Vapor
+        run: vendor/bin/vapor deploy staging --commit="${GITHUB_SHA}" --message="${GITHUB_REF}"
+        env:
+          AWS_DEFAULT_REGION: us-west-2

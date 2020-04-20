@@ -16,6 +16,7 @@
         justify="center"
       >
         <v-col class="my-4">
+          <!--https://favicon.io/favicon-generator/?t=%2F%3E&ff=Amaranth&fs=110&fc=%23FBD38D&b=rounded&bc=%232D3748-->
           <v-img
             :max-height="120"
             :src="'/img/logo.png' | assetUrl"
