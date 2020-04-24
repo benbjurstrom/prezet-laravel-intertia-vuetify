@@ -25,10 +25,9 @@ services:
 
   phpfpm:
     container_name: prezet-phpfpm
-    image: benbjurstrom/php-laravel:0.2.0
-    # image: benbjurstrom/php-laravel:0.2.0
+    image: benbjurstrom/php-laravel:0.3.1
     environment:
-      APP_MODE: app
+      CONTAINER_ROLE: app
       DB_HOST: prezet-postgres
       DB_PORT: 5432
       REDIS_HOST: prezet-redis
@@ -57,24 +56,25 @@ services:
 
   queue:
     container_name: prezet-queue
-    image: benbjurstrom/php-laravel:0.2.0
+    image: benbjurstrom/php-laravel:0.3.1
     depends_on: [redis, postgres]
     environment:
-      APP_MODE: queue
+      CONTAINER_ROLE: queue
       QUEUE_CONNECTION: redis
       DB_HOST: prezet-postgres
       DB_PORT: 5432
       REDIS_HOST: prezet-redis
       MAIL_HOST: prezet-mailhog
+      APP_URL: http://prezet-nginx
     volumes:
       - ./:/var/www
 
-  job:
-    container_name: prezet-job
-    image: benbjurstrom/php-laravel:0.2.0
+  scheduler:
+    container_name: prezet-scheduler
+    image: benbjurstrom/php-laravel:0.3.1
     depends_on: [redis, postgres]
     environment:
-      APP_MODE: job
+      CONTAINER_ROLE: scheduler
       DB_HOST: prezet-postgres
       DB_PORT: 5432
       REDIS_HOST: prezet-redis

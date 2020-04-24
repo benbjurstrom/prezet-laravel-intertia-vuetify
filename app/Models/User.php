@@ -41,27 +41,49 @@ class User extends Model implements
         'owner' => 'boolean',
     ];
 
-    public function account(): BelongsTo
+    /**
+     * The channels the user receives notification broadcasts on.
+     *
+     * @return string
+     */
+    public function receivesBroadcastNotificationsOn()
     {
-        return $this->belongsTo(Account::class);
+        return 'users.'.$this->id;
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Accessors & Mutators
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
 
     public function setPasswordAttribute(string $password): void
     {
         $this->attributes['password'] = Hash::make($password);
     }
 
-    /**
-     * @return string | null
-     */
-    public function photoUrl(array $attributes)
-    {
-        if ($this->photo_path) {
-            return URL::to(App::make(Server::class)->fromPath($this->photo_path, $attributes));
-        }
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
 
-        return null;
+    public function account(): BelongsTo
+    {
+        return $this->belongsTo(Account::class);
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Scopes
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
 
     public function scopeOrderByName(Builder $query): void
     {
@@ -101,5 +123,25 @@ class User extends Model implements
                     $query->onlyTrashed();
                 }
             });
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Other Methods
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+
+    /**
+     * @return string | null
+     */
+    public function photoUrl(array $attributes)
+    {
+        if ($this->photo_path) {
+            return URL::to(App::make(Server::class)->fromPath($this->photo_path, $attributes));
+        }
+
+        return null;
     }
 }

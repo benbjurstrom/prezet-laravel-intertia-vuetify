@@ -45,23 +45,6 @@
           </v-list-item-title>
         </v-list-item-content>
       </inertia-link>
-
-      <v-divider
-        class="my-4"
-        dark
-      />
-
-      <!-- app -->
-      <v-list-item v-if="hasPermission('ACCESS_APP')" href="/app ">
-        <v-list-item-action>
-          <fa icon="external-link-alt" />
-        </v-list-item-action>
-        <v-list-item-content>
-          <v-list-item-title>
-            App
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>

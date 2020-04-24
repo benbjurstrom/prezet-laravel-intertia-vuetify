@@ -7,6 +7,8 @@ import { InertiaApp } from '@inertiajs/inertia-vue'
 import vuetify from '~/plugins/vuetify'
 import '~/plugins/fontawesome'
 import '~/plugins/filters'
+import Pusher from 'pusher-js'
+import VueEcho from 'vue-echo'
 
 require('~/plugins/registerComponents')
 
@@ -19,6 +21,19 @@ Vue.use(PortalVue)
 Vue.use(VueMeta)
 
 const app = document.getElementById('app')
+const page = JSON.parse(app.dataset.page)
+
+window.Pusher = Pusher
+Vue.use(VueEcho, {
+  broadcaster: 'pusher',
+  key: page.props.config.pusherKey,
+  cluster: 'us3',
+  auth: {
+    headers: {
+      'X-CSRF-TOKEN': page.props.config.csrfToken,
+    },
+  }
+})
 
 const eventBus = new Vue()
 window.eventBus = eventBus
@@ -46,7 +61,7 @@ window.App = new Vue({
 
   metaInfo: {
     title: 'Loading...',
-    titleTemplate: '%s • Vuetify Ping CRM',
+    titleTemplate: '%s • Prezet',
     changed (info) {
       window.App.goBack = info.goBack
       window.App.appTitle = info.titleChunk
@@ -70,7 +85,7 @@ window.App = new Vue({
 
   render: h => h(InertiaApp, {
     props: {
-      initialPage: JSON.parse(app.dataset.page),
+      initialPage: page,
       resolveComponent: name => import(`~/pages/${name}`).then(module => module.default),
       transformProps: props => {
         if (props.flash.success) {

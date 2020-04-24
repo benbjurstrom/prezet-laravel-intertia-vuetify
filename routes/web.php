@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ReauthenticateController;
 use App\Http\Controllers\Auth\ResetController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Demo\NotificationController;
 use App\Http\Controllers\Settings\EmailUpdateController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Settings\PasswordUpdateController;
@@ -23,6 +24,8 @@ use App\Http\Controllers\Settings\SettingsController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Settings\TwoFactorController;
 use Illuminate\Support\Facades\Route;
+
+
 /*
 |--------------------------------------------------------------------------
 | Guest Routes
@@ -45,7 +48,6 @@ Route::middleware('guest')->group(function () {
         });
     });
 });
-//Auth::routes(['register' => false]);
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +94,10 @@ Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/',  [DashboardController::class, '__invoke'])->name('home');
 
+    Route::prefix('demo')->name('demo.')->group(function () {
+        Route::post('/notifications', [NotificationController::class, 'store'])->name('notifications.store');
+    });
+
     // Organizations
     Route::prefix('organizations')->name('organizations.')->group(function () {
 
@@ -106,9 +112,4 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{organization}', 'OrganizationsController@destroy')->name('destroy');
         Route::put('/{organization}/restore', 'OrganizationsController@restore')->name('restore');
     });
-});
-
-// 500 error
-Route::get('500', function () {
-    echo $fail;
 });

@@ -2,7 +2,10 @@
   <v-container>
     <v-row class="justify-center">
       <v-col md="6" sm="12">
-        //Dashboard.vue
+        <p class="body-1">
+          Notification Demo
+        </p>
+        <NotificationsDemo />
       </v-col>
     </v-row>
   </v-container>
@@ -10,6 +13,7 @@
 
 <script>
 import Layout from '~/layouts/Default'
+import NotificationsDemo from '~/components/Demo/CreateNotification'
 
 export default {
   metaInfo: { title: 'Dashboard' },
@@ -17,7 +21,7 @@ export default {
   layout: (h, page) => h(Layout, [page]),
 
   components: {
-    //
+    NotificationsDemo
   },
 
   props: {

@@ -18,11 +18,7 @@
       </v-toolbar-title>
       <v-spacer />
       <v-toolbar-items>
-        <v-btn icon>
-          <v-icon size="24">
-            notification_important
-          </v-icon>
-        </v-btn>
+        <NotificationsMenu />
         <UserMenu />
       </v-toolbar-items>
     </v-app-bar>
@@ -40,13 +36,15 @@
 import Sidebar from '~/components/layout/Sidebar'
 import Footer from '~/components/layout/Footer'
 import UserMenu from '~/components/layout/UserMenu'
+import NotificationsMenu from '~/components/layout/NotificationsMenu'
 
 export default {
   name: 'MainLayout',
   components: {
     Sidebar,
     Footer,
-    UserMenu
+    UserMenu,
+    NotificationsMenu
   },
   data: () => ({
     drawer: true

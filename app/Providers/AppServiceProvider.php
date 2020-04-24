@@ -37,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
 
         Inertia::share([
             'auth' => function () {
-                $user = Auth::user();
+                $user = auth()->user();
                 return [
                     'user' => $user
                         ? [
@@ -52,12 +52,9 @@ class AppServiceProvider extends ServiceProvider
             },
             'config' => function () {
                 return [
+                    'csrfToken' => csrf_token(),
                     'assetUrl' => config('app.assetUrl'),
-                ];
-            },
-            'flash' => function () {
-                return [
-                    'success' => Session::get('success'),
+                    'pusherKey' => config('broadcasting.connections.pusher.key'),
                 ];
             },
             'errors' => function () {
@@ -66,6 +63,15 @@ class AppServiceProvider extends ServiceProvider
                         ->getBag('default')
                         ->getMessages()
                     : (object) [];
+            },
+            'flash' => function () {
+                return [
+                    'success' => Session::get('success'),
+                ];
+            },
+            'notifications' => function () {
+                $user = auth()->user();
+                return $user ? auth()->user()->unreadNotifications : null;
             },
             'release' => function () {
                 return config('version.release');
