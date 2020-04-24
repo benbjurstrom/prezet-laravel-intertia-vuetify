@@ -48,7 +48,7 @@ class User extends Model implements
      */
     public function receivesBroadcastNotificationsOn()
     {
-        return 'users.'.$this->id;
+        return 'users.' . $this->id;
     }
 
     /*

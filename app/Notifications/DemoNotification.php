@@ -41,9 +41,7 @@ class DemoNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-        ->subject('Demo Notification')
-        ->markdown('mail', [
+        return (new MailMessage())->subject('Demo Notification')->markdown('mail', [
             'user' => $notifiable,
             'message' => 'You requested a demo notification from ' . config('app.url'),
             'action' => [
@@ -64,7 +62,7 @@ class DemoNotification extends Notification implements ShouldQueue
         return [
             'title' => 'Demo Notification',
             'body' => 'This is an example notification',
-            'created_at' => now()->toIso8601String()
+            'created_at' => now()->toIso8601String(),
         ];
     }
 }

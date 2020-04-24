@@ -13,11 +13,10 @@ class NotificationController extends Controller
 {
     public function store(): RedirectResponse
     {
-        auth()->user()
-            ->notify((new DemoNotification())
-            ->delay(now()->addSeconds(10)));
+        auth()
+            ->user()
+            ->notify((new DemoNotification())->delay(now()->addSeconds(10)));
 
-        return redirect()
-            ->route('home');
+        return redirect()->route('home');
     }
 }
