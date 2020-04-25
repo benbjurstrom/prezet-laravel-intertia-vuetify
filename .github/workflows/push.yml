@@ -1,6 +1,15 @@
 name: push
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+  pull_request:
+    types: [opened, closed]
+    branches:
+      - master
 
 jobs:
   test:
@@ -41,7 +50,8 @@ jobs:
 
   release:
     if: startsWith(github.ref, 'refs/tags/v')
-    runs-on: benbjurstrom/php-laravel:0.2.0
+    runs-on: ubuntu-latest
+    container: benbjurstrom/php-laravel:0.3.1
     needs: test
     steps:
       - uses: actions/checkout@v2
@@ -49,9 +59,10 @@ jobs:
       - name: Install Dependencies
         run: |
           composer install --no-dev --classmap-authoritative
-          artisan version "GITHUB_REF"
+          php artisan version "GITHUB_REF"
 
       - name: Deploy Vapor
-        run: vendor/bin/vapor deploy staging --commit="${GITHUB_SHA}" --message="${GITHUB_REF}"
+        run: vendor/bin/vapor deploy demo --commit="${GITHUB_SHA}" --message="${GITHUB_REF}"
         env:
           AWS_DEFAULT_REGION: us-west-2
+          VAPOR_API_TOKEN: ${{ secrets.VAPOR_API_TOKEN }}
