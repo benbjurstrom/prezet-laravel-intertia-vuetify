@@ -59,10 +59,10 @@ jobs:
       - name: Install Dependencies
         run: |
           composer install --no-dev --classmap-authoritative
-          php artisan version "GITHUB_REF"
+          php artisan version "${GITHUB_REF/refs\/tags\//}"
 
       - name: Deploy Vapor
-        run: vendor/bin/vapor deploy demo --commit="${GITHUB_SHA}" --message="${GITHUB_REF}"
+        run: vendor/bin/vapor deploy demo --commit="${GITHUB_SHA}" --message="${GITHUB_REF/refs\/tags\//}"
         env:
           AWS_DEFAULT_REGION: us-west-2
           VAPOR_API_TOKEN: ${{ secrets.VAPOR_API_TOKEN }}
