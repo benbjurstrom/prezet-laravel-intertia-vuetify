@@ -16,12 +16,14 @@ use App\Http\Controllers\Auth\ReauthenticateController;
 use App\Http\Controllers\Auth\ResetController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Demo\NotificationController;
+use App\Http\Controllers\Settings\EmailController;
 use App\Http\Controllers\Settings\EmailUpdateController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Settings\PasswordUpdateController;
 use App\Http\Controllers\Settings\EmailVerificationController;
-use App\Http\Controllers\Settings\SettingsController;
+use App\Http\Controllers\Settings\SecurityController;
 use App\Http\Controllers\Auth\RegistrationController;
+use App\Http\Controllers\Settings\TeamController;
 use App\Http\Controllers\Settings\TwoFactorController;
 use Illuminate\Support\Facades\Route;
 
@@ -83,7 +85,10 @@ Route::middleware('auth')->group(function () {
         });
 
         // Settings
-        Route::get('/settings', [SettingsController::class, '__invoke'])->name('settings');
+        Route::get('/settings', function(){ return redirect()->route('settings.email'); })->name('settings');
+        Route::get('/settings/email', [EmailController::class, '__invoke'])->name('settings.email');
+        Route::get('/settings/teams', [TeamController::class, '__invoke'])->name('settings.teams');
+        Route::get('/settings/security', [SecurityController::class, '__invoke'])->name('settings.security');
         Route::get('/settings/2fa', [TwoFactorController::class, 'create'])->name('settings.2fa.create');
         Route::post('/settings/2fa', [TwoFactorController::class, 'store'])->name('settings.2fa.store');
         Route::delete('/settings/2fa', [TwoFactorController::class, 'destroy'])->name('settings.2fa.destroy');

@@ -23,6 +23,7 @@
       </v-toolbar-items>
     </v-app-bar>
     <v-content class="background">
+      <Subbar />
       <v-container class="px-6 my-6" fluid>
         <flash-messages />
         <slot />
@@ -34,6 +35,7 @@
 
 <script>
 import Sidebar from '~/components/layout/Sidebar'
+import Subbar from '~/components/layout/Subbar'
 import Footer from '~/components/layout/Footer'
 import UserMenu from '~/components/layout/UserMenu'
 import NotificationsMenu from '~/components/layout/NotificationsMenu'
@@ -42,6 +44,7 @@ export default {
   name: 'MainLayout',
   components: {
     Sidebar,
+    Subbar,
     Footer,
     UserMenu,
     NotificationsMenu

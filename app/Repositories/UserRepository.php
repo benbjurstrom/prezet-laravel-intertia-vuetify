@@ -3,7 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Account;
+use App\Models\Team;
 use App\Models\User;
+use Ramsey\Uuid\Uuid;
 use Throwable;
 
 class UserRepository
@@ -24,7 +26,24 @@ class UserRepository
                 'password' => bcrypt($password),
             ]);
 
+            $this->createPersonalTeam($user);
             return $user;
         });
+    }
+
+    /**
+     * @param User $user
+     * @return Team
+     */
+    protected function createPersonalTeam(User $user): Team
+    {
+        $team = new Team();
+        $team->owner_id = $user->id;
+        $team->name = 'Personal';
+        $team->save();
+
+        $team->users()->attach($user, ['role' => 'OWNER', 'id' => Uuid::uuid4()]);
+
+        return $team;
     }
 }

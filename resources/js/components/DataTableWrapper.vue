@@ -1,53 +1,50 @@
 <template>
-  <v-row>
-    <!-- THE SEARCH -->
-    <v-col v-if="withSearch" cols="12">
-      <v-row justify="end">
-        <v-col cols="12" md="6" lg="4" xl="3">
-          <v-text-field
-            v-model="search"
-            append-icon="search"
-            label="SEARCH"
-            single-line
-            hide-details
-          />
-        </v-col>
-      </v-row>
-    </v-col>
+  <div>
+    <v-data-table
+      :mobile-breakpoint="0"
+      :sort-by="sortBy"
+      :sort-desc="sortDesc"
+      :items="items"
+      :headers="headers"
+      flat
+      item-key="id"
+      :loading="loading"
+      hide-default-footer
+    >
+      <template #top="{ top }">
+        <slot name="top" :top="top" />
+      </template>
+      <template #item="{ item }">
+        <slot name="item" :item="item" />
+      </template>
 
-    <!-- THE TABLE -->
-    <v-col cols="12">
-      <v-data-table
-        :mobile-breakpoint="0"
-        :sort-by="sortBy"
-        :sort-desc="sortDesc"
-        :items="items"
-        :headers="headers"
-        :search="search"
-        :items-per-page="itemsPerPage"
-        :footer-props="footerProps"
-        class="elevation-1"
-      >
-        <template #item="{ item }">
-          <slot name="item" :item="item" />
-        </template>
-
-        <template #no-results>
-          <v-alert color="warning" icon="warning" outlined>
-            No results found for '{{ search }}'
-          </v-alert>
-        </template>
-      </v-data-table>
-    </v-col>
-  </v-row>
+      <template #no-results>
+        <v-alert color="warning" icon="warning" outlined>
+          No results found.
+        </v-alert>
+      </template>
+    </v-data-table>
+    <Pagination
+      :links="links"
+    />
+  </div>
 </template>
 
 <script>
+import Pagination from '~/components/Pagination'
+
 export default {
   name: 'DataTableWrapper',
+  components: {
+    Pagination
+  },
 
   props: {
     items: {
+      type: Array,
+      default: () => []
+    },
+    links: {
       type: Array,
       default: () => []
     },
@@ -59,10 +56,6 @@ export default {
       type: [String, Array],
       default: () => null
     },
-    withSearch: {
-      type: Boolean,
-      default: false
-    },
     sortDesc: {
       type: Boolean,
       default: false
@@ -70,13 +63,7 @@ export default {
   },
 
   data: vm => ({
-    search: '',
-    footerProps: {
-      'items-per-page-options': [10, 25, 50, -1],
-      'items-per-page-text': 'Per page',
-      'items-per-page-all-text': 'All'
-    },
-    itemsPerPage: 10,
+    loading: false
   })
 }
 </script>

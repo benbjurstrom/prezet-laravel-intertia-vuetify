@@ -11,10 +11,16 @@ use Illuminate\Testing\TestResponse;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use ReflectionClass;
 use ReflectionException;
+use TestCaseSeeder;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, WithFaker, DatabaseTransactions;
+
+    /**
+     * @var TestCaseSeeder
+     */
+    public $seeder;
 
     /**
      * @param object $instance
@@ -34,6 +40,8 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->seeder = new TestCaseSeeder();
 
         $this->withoutMiddleware(Reauthenticate::class);
 

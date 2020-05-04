@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->string('email_pending')->nullable();
             $table->boolean('enabled')->default(true);
             $table->string('photo_path', 100)->nullable();
+            $table->uuid('current_team_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

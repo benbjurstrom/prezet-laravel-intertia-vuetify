@@ -22,6 +22,31 @@
         </v-list-item-content>
       </v-list-item>
 
+      <v-select
+        v-model="teamId"
+        clearable
+        filled
+        :loading="loading"
+        label="Teams"
+        :items="teams"
+        item-text="name"
+        item-value="id"
+        :menu-props="{ closeOnContentClick: false}"
+      >
+        <template v-slot:append-item>
+          <inertia-link class="v-list-item v-list-item--link theme--light" :href="route('settings')" method="get" @click="$emit('input')">
+            <v-list-item-action>
+              <fa icon="cog" />
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>
+                Settings
+              </v-list-item-title>
+            </v-list-item-content>
+          </inertia-link>
+        </template>
+      </v-select>
+
       <!-- settings -->
       <inertia-link class="v-list-item v-list-item--link theme--dark" :href="route('home')" method="get">
         <v-list-item-action>
@@ -62,7 +87,14 @@ export default {
   },
 
   data: () => ({
-    //
+    teamId: null,
+    teams: [
+      {
+        id: 1,
+        name: 'test'
+      }
+    ],
+    loading: false
   }),
 
   computed: {

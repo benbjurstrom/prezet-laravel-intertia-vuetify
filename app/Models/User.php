@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\CanJoinTeams;
 use DarkGhostHunter\Laraguard\Contracts\TwoFactorAuthenticatable;
 use DarkGhostHunter\Laraguard\TwoFactorAuthentication;
 use Illuminate\Auth\MustVerifyEmail;
@@ -29,9 +30,10 @@ class User extends Model implements
     use SoftDeletes,
         Authenticatable,
         Authorizable,
+        CanJoinTeams,
+        CanResetPassword,
         MustVerifyEmail,
         Notifiable,
-        CanResetPassword,
         TwoFactorAuthentication;
 
     /**

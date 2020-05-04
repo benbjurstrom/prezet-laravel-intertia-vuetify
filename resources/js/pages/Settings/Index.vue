@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row class="justify-center">
+    <v-row v-if="$page.meta.route === 'settings.email'" class="justify-center">
       <v-col md="6" sm="12">
         <p class="body-1">
           Email
@@ -10,8 +10,7 @@
         />
       </v-col>
     </v-row>
-
-    <v-row class="justify-center">
+    <v-row v-if="$page.meta.route === 'settings.security'" class="justify-center">
       <v-col md="6" sm="12">
         <p class="body-1">
           Password
@@ -19,8 +18,7 @@
         <PasswordCard />
       </v-col>
     </v-row>
-
-    <v-row class="justify-center">
+    <v-row v-if="$page.meta.route === 'settings.security'" class="justify-center">
       <v-col md="6" sm="12">
         <p class="body-1">
           2FA
@@ -30,11 +28,17 @@
         />
       </v-col>
     </v-row>
+    <v-row v-if="$page.meta.route === 'settings.teams'" class="justify-center">
+      <v-col md="6" sm="12">
+        <TeamApp />
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script>
 import Layout from '~/layouts/Default'
+import TeamApp from '~/components/Settings/Team/App'
 import EmailCard from '~/components/Settings/Email/Card'
 import PasswordCard from '~/components/Settings/Password/Card'
 import TwoFactorCard from '~/components/Settings/TwoFactor/Card'
@@ -47,18 +51,19 @@ export default {
   components: {
     EmailCard,
     PasswordCard,
-    TwoFactorCard
+    TwoFactorCard,
+    TeamApp
   },
 
   props: {
     user: {
       type: Object,
-      required: true
+      default: () => {}
     },
     twoFactor: {
       type: Boolean,
-      required: true
-    },
+      default: false
+    }
   },
 
   data: () => ({

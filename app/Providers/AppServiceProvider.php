@@ -69,6 +69,13 @@ class AppServiceProvider extends ServiceProvider
                     'success' => Session::get('success'),
                 ];
             },
+            'meta' => function () {
+                return [
+                    'route' => request()
+                        ->route()
+                        ->getName(),
+                ];
+            },
             'notifications' => function () {
                 $user = auth()->user();
                 return $user ? auth()->user()->unreadNotifications : null;

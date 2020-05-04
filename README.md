@@ -63,6 +63,6 @@ docker exec prezet-phpfpm php artisan migrate:fresh --seed
 ```
 Login at http://localhost:8000
 ```shell
-email: test@example.com
+email: user@example.com
 password: 123
 ```
