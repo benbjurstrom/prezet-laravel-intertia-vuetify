@@ -53,7 +53,7 @@ class TwoFactorController extends Controller
         );
 
         return redirect()
-            ->route('settings')
+            ->route('settings.security')
             ->with('success', 'Two Factor Authentication Has Been Enabled.');
     }
 
@@ -66,7 +66,7 @@ class TwoFactorController extends Controller
             ->user()
             ->disableTwoFactorAuth();
         return redirect()
-            ->route('settings')
+            ->route('settings.security')
             ->with('success', 'Two Factor Authentication Has Been Disabled.');
     }
 }

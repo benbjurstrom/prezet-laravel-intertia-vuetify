@@ -65,7 +65,7 @@ class EmailVerificationController extends Controller
 
         if ($request->user()->hasVerifiedEmail()) {
             return redirect()
-                ->route('settings')
+                ->route('settings.email')
                 ->with('success', 'Email Already Verified.');
         }
 
@@ -74,7 +74,7 @@ class EmailVerificationController extends Controller
         }
 
         return redirect()
-            ->route('settings')
+            ->route('settings.email')
             ->with('success', 'Email Verified.');
     }
 
@@ -88,14 +88,14 @@ class EmailVerificationController extends Controller
     {
         if ($request->user()->hasVerifiedEmail()) {
             return redirect()
-                ->route('settings')
+                ->route('settings.email')
                 ->with('error', 'Email Already Verified.');
         }
 
         $request->user()->sendEmailVerificationNotification();
 
         return redirect()
-            ->route('settings')
+            ->route('settings.email')
             ->with('success', 'Verification Resent.');
     }
 }

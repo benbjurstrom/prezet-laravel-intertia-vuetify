@@ -23,7 +23,7 @@ class PasswordUpdateController extends Controller
         Mail::to($user)->queue(new PasswordChangeNotification($user));
 
         return redirect()
-            ->route('settings')
+            ->route('settings.email')
             ->with('success', 'Password updated.');
     }
 }

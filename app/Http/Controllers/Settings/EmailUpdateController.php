@@ -50,7 +50,7 @@ class EmailUpdateController extends Controller
         $es->emailChangeRequest($data['email']);
 
         return redirect()
-            ->route('settings')
+            ->route('settings.email')
             ->with('success', 'Additional instructions have been sent to ' . $data['email']);
     }
 
@@ -79,7 +79,7 @@ class EmailUpdateController extends Controller
         $user->save();
 
         return redirect()
-            ->route('settings')
+            ->route('settings.email')
             ->with('success', 'Email change has been canceled.');
     }
 
@@ -95,7 +95,7 @@ class EmailUpdateController extends Controller
         $user->save();
 
         return redirect()
-            ->route('settings')
+            ->route('settings.email')
             ->with('success', 'Email Canceled.');
     }
 }
