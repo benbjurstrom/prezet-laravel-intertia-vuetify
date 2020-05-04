@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
         $user = factory(User::class)
             ->create([
                 'email' => 'user@example.com',
-                'password' => '123'
+                'password' => env('TEST_PASSWORD', '123')
             ]);
 
         $teams = factory(Team::class, 50)->create([
