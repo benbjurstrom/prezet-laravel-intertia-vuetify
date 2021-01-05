@@ -23,7 +23,7 @@
         "@prettier/plugin-php": "^0.14.0",
         "@vue/eslint-config-standard": "^5.1.2",
         "autosize": "^4.0.2",
-        "axios": "^0.18",
+        "axios": "^0.21",
         "babel-eslint": "^10.0.3",
         "babel-polyfill": "^6.26.0",
         "cross-env": "^5.1",
